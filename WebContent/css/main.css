@@ -1,0 +1,88 @@
+body {
+	background-color: #867F75;
+    background-position: center center;
+    font-family: Verdana,Arial,sans-serif;
+}
+
+a:link {
+    color: #42382C;
+    text-decoration: none;
+}
+a:visited {
+    color: #42382C;
+}
+a:hover {
+    color: #990000;
+}
+a:active {
+    color: #42382C;
+}
+
+
+h1{
+    color: #BF5820;
+    font-family: Verdana;
+    font-size: 18px;
+    font-weight: bold !important;
+    margin: 0;
+    padding: 0 0 0 15px;
+    background-color: #CAD6A8;
+}
+h2 {
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}
+
+ul {
+    list-style: none outside none;
+    font-size: 12px;
+    padding-left: 0;
+    color: #990000;
+    line-height: 16px;
+}
+
+.wrapper {
+	background: white;
+	float: none;
+	margin: 0px 100px 0px 100px;
+	padding: 20px 10px 10px 18px;
+}
+
+.topPanel {
+	background: none repeat scroll 0 0 #FBEFD5;
+	max-width: 1024px;
+	min-width: 659px;
+	padding: 20px 10px 10px 18px;
+}
+
+.searchPanel {
+	background: none repeat scroll 0 0 #FEFCF7;
+	max-width: 1024px;
+	min-width: 659px;
+	padding: 20px 10px 10px 18px;
+}
+
+.mainPanel {
+	background: none repeat scroll 0 0 #FEFCF7;
+	border-top: 1px solid #62584D;
+	border-bottom: 1px solid #62584D;
+	color: #42382C;
+	float: none;
+	font-size: 13px;
+	margin: 0;
+	padding: 10px 15px 0;
+	max-width: 1024px;
+	min-width: 659px;
+}
+
+.copyright {
+	background-position: center center;
+	color: #FFFFFF;
+	font-size: 11px;
+	margin: 4px auto 2px;
+	padding: 0;
+	text-align: center;
+	width: 980px;
+}
