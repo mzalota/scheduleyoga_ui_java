@@ -21,9 +21,9 @@
         <mapping resource="com/scheduleyoga/model/Schedule.hbm.xml"/>
 		-->
         
-       
 		<mapping class="com.scheduleyoga.parser.Event"/>
 		<mapping class="com.scheduleyoga.dao.Studio"/>
+		<mapping class="com.scheduleyoga.dao.ParsingHistory"/>
     </session-factory>
 
 </hibernate-configuration>

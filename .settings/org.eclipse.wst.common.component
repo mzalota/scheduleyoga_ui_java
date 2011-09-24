@@ -6,7 +6,7 @@
         <dependent-module archiveName="SchYogaParser.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/SchYogaParser/SchYogaParser">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <property name="context-root" value="ParsingUI"/>
         <property name="java-output-path" value="/ParsingUI/build/classes"/>
+        <property name="context-root" value="ParsingUI"/>
     </wb-module>
 </project-modules>

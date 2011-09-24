@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.WordUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.exception.ParseErrorException;
@@ -23,6 +25,7 @@ import org.hibernate.cfg.Configuration;
 import com.scheduleyoga.dao.DBAccess;
 import com.scheduleyoga.dao.Studio;
 import com.scheduleyoga.parser.Event;
+import com.scheduleyoga.parser.Helper;
 
 /**
  * Servlet implementation class ListForState
@@ -38,22 +41,18 @@ public class ListForState extends VelocityViewServlet {
         // TODO Auto-generated constructor stub
     }
 
-    protected ArrayList getNames()
-    {
-        ArrayList list = new ArrayList();
-
-        list.add("Studio 1");
-        list.add("Studio 2");
-        list.add("Studio 3");
-        list.add("Studio 4");
-
-        return list;
-    }
 	protected Template handleRequest(HttpServletRequest request, HttpServletResponse response, Context ctx) {
 	    
-		ctx.put("version", "322");
+		//List<String> pathElements = Helper.createNew().getURLParts(request.getRequestURI());
+		//String stateUrlName = pathElements.get(pathElements.size() - 1); //get last url part
+		String stateNameUrl = request.getParameter("state");
+		String stateName = WordUtils.capitalize(StringUtils.replace(stateNameUrl, "-", " "));
+		
+		ctx.put("version", "355");
+		ctx.put("stateNameUrl", stateNameUrl);
+		ctx.put("stateName", stateName);
 		ctx.put("studios", getStudios());
-		ctx.put("list", getNames());
+
         String template = "templates/studios_list.vm"; 
         Template outty = null;
         try {        	

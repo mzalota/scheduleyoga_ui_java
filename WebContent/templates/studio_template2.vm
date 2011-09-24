@@ -4,7 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Schedule for Yoga Studio ABC</title>
 
-<link href="../css/main.css" rel="stylesheet" type="text/css"/>
+<link href="/css/main.css" rel="stylesheet" type="text/css"/>
+
 
 <style type="text/css">
 </style>
@@ -12,34 +13,97 @@
 </head>
 <body>
 	<div class="wrapper">
-		<h1>Schedule for studio ABC (version $version)</h1>
-
-		<div class="searchPanel">
-			<h2>Search:</h2>
-		
+	
+		<div>	
+			#parse("templates/header.html")
 		</div>
-		<div class="mainPanel">
-			<h2>Yoga Classes by State:</h2>
-			<ul>
-				#foreach( $event in $events )
-					<li>
-						<div id="menu" style="background-color:#FFD700;width:100px;float:left;">
-							<span class="carrot">›&nbsp;</span><a href="/alabama/">${event.getStartTimeStr()}</a> 
-						</div>
-						<div id="content" style="background-color:#EEEEEE;width:400px;float:left;">
-							${event.getComment()} by ${event.getInstructorName()}
-						</div>
-					</li>
-					<div id="footer" style="clear:both;"></div>
-				#end
-			</ul>
+	
+		<div style="clear: both"></div>
+		<div style="margin: 10px 0px">
+			<h1>Schedule for studio <a href="${studio.getUrlSchedule()}">${studio.getName()}</a> (version $version)</h1>
+		</div>
+		
+		<div class="mainPanel">		
+			<div id="left_panel">
+				<div class="left_resources_wrap">
+					<div class="left_resources">
+						<h3>Yoga Resources</h3>
+						<p><a href="/yoga/">What is Yoga</a></p>
+						<p><a href="/yoga-styles/">Yoga Styles</a></p>
+						<p><a href="/yoga-props/">Yoga Props</a></p>
+					</div>
+				</div>
+			</div>
+			
+			<div id="right_panel">
+				<div style="margin: 10px";/>
+
+		
+				<div id="bread">
+					<ul>
+						<li>
+							<a href="/"> Schedule Yoga </a>
+							<ul>
+								<li> &raquo; <a style="text-decoration: underline;" href="/${stateNameUrl}/"> ${stateName}</a>
+									<ul> 
+										<li>&raquo; <a style="text-decoration: underline;" href="/${stateNameUrl}/${studioNameUrl}/"> ${studio.getName()}</a> </li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<div class="mainPanel">
+					<div id="heading" style="background-color:#999999; width:800px; height:40px; float:left; margin:1px;">
+							<div style="float:left; margin-top:10px;">
+								#if (${navDates.containsKey("<<")})
+									<a href="/${stateNameUrl}/${studioNameUrl}/${navDates.get("<<")}.html"> &lt;&lt; </a>
+								#end
+								#if (${navDates.containsKey("<")})
+									<a href="/${stateNameUrl}/${studioNameUrl}/${navDates.get("<")}.html"> &lt; </a>
+								#end
+							</div>
+							<div style="float:left;"><h2>Yoga Classes </br>  $date.format('MMM d, yyyy',$schedDate) </h2></div>   
+							<div style="float:left; margin-top:10px;">
+								#if (${navDates.containsKey(">")})
+									<a href="/$stateNameUrl/${studioNameUrl}/${navDates.get(">")}.html"> &gt; </a>
+								#end
+								#if (${navDates.containsKey(">>")}) 
+									<a href="/$stateNameUrl/${studioNameUrl}/${navDates.get(">>")}.html"> &gt;&gt; </a>
+								#end
+							</div>
+					</div>
+					<div style="clear:both;"></div>
+					<ul>
+											
+						<img src="/images/stock-photo-14114777-doing-yoga-in-health-club.jpg" style="float: right; margin: 4px" />
+				
+						#foreach( $startTime in $startTimes)
+							<li>
+								<div id="menu" style="background-color:#FFD700;width:100px;float:left; margin:1px;">
+									<span class="carrot">ï¿½&nbsp;</span><a href="/new-york/">$date.format('h:mm a',$startTime)</a> 
+								</div>
+								<div id="content" style="background-color:#EEEEEE;width:400px;float:left;margin:1px;">
+									#foreach( $event in $schedule.get($startTime) )
+										<div id="content" style="background-color:#AAAAAA;width:200px;float:left;">
+											${event.getComment()}
+											<div style="display:none;"> <br> 
+											(${event.getInstructorName()}) </div>
+										</div>
+									#end
+								</div>
+							</li>
+							<div style="clear:both;"></div>
+						#end
+					</ul>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div style="clear: both"></div>
-	<div class="copyright">
-		<span>
-		<a href="http://www.scheduleyoga.com/privacy-policy.html" target="new" rel="nofollow">Privacy Policy</a> | </span> 
-		<span>Copyright © 2011 ScheduleYoga.com. All rights reserved. | </span>
+	<div>	
+		#parse("templates/footer.html")
 	</div>
+	
 </body>
 </html>

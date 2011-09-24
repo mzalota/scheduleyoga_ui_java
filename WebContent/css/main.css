@@ -5,6 +5,7 @@ body {
 }
 
 a:link {
+	cursor: pointer;
     color: #42382C;
     text-decoration: none;
 }
@@ -18,15 +19,19 @@ a:active {
     color: #42382C;
 }
 
+div {
+	display: block;
+}
 
 h1{
     color: #BF5820;
     font-family: Verdana;
     font-size: 18px;
     font-weight: bold !important;
-    margin: 0;
-    padding: 0 0 0 15px;
-    background-color: #CAD6A8;
+    margin: 5px;
+    margin-bottom: 10px;
+    padding: 10 0 0 15px;
+    background-color: #FEF8E9; /*CAD6A8*/
 }
 h2 {
     font-size: 16px;
@@ -45,9 +50,10 @@ ul {
 
 .wrapper {
 	background: white;
-	float: none;
+
 	margin: 0px 100px 0px 100px;
 	padding: 20px 10px 10px 18px;
+	width: 828px;
 }
 
 .topPanel {
@@ -69,12 +75,13 @@ ul {
 	border-top: 1px solid #62584D;
 	border-bottom: 1px solid #62584D;
 	color: #42382C;
-	float: none;
+
 	font-size: 13px;
 	margin: 0;
 	padding: 10px 15px 0;
 	max-width: 1024px;
 	min-width: 659px;
+	height: auto;
 }
 
 .copyright {
@@ -85,4 +92,142 @@ ul {
 	padding: 0;
 	text-align: center;
 	width: 980px;
+}
+
+ul#tabs, #tabs-njs {
+	height: 25px;
+	list-style: none;
+	padding: 0;
+	margin: 20px 0 0;
+	border-bottom: 1px solid #3B5998;
+}
+
+ul {
+    margin: 0;
+    padding-bottom: 15px;
+}
+
+/*************** Bread crums **************/
+
+#bread {
+    color: #36393D;
+    margin-bottom: 25px;
+	marginpadding: 0;
+	font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
+    font-size: 12px;
+}
+#bread ul {
+    border: medium none;
+    display: inline;
+    margin-left: 0;
+    padding-left: 0;
+}
+#bread ul li {
+    border: medium none;
+    display: inline;
+    list-style: none outside none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+#bread a:link {
+	cursor: pointer;
+    color: #42382C;
+    text-decoration: underline;
+}
+
+/*************** Navigation **************/
+
+
+#nav {    
+    background-color: #CAD6A8;
+    float: left;
+    height: 36px;
+    margin: 0;
+    width: 728px;
+}
+#nav p {
+    margin: 20px 0 0 20px;
+    padding: 0 0 0 20px;
+    color: #BF5820;
+    font-family: Verdana;
+    font-size: 16px;
+    font-weight: bold !important;
+}
+
+#nav a:link {
+	margin: 20px 0 0 20px;
+    text-decoration: none;
+}
+#nav a:visited {
+	margin: 20px 0 0 20px;
+    text-decoration: none;
+}
+#nav a:hover {
+    color: #BF5820;
+    text-decoration: none; 
+}
+#nav a:active {
+    text-decoration: none;
+}
+#nav a.topnavselected {
+    color: #BF5820;
+    text-decoration: none;
+}
+
+/*************** Left Panel **************/
+
+#left_panel{float:left; width:206px; margin:0; padding:0;}
+
+.left_resources_wrap{float:left; width:206px; height:auto; margin:13px 0 0 0; padding:0}
+
+.left_module{float:left; width:206px; height:auto; margin:13px 0 0 0; padding:0}
+
+.left_resources{
+	float:left; 
+	width:206px; 
+	height:auto; 
+	margin:0; 
+	padding:0;  
+	background-color: #CAD6A8; no-repeat;
+}
+
+.left_resources_bottom{
+	float:left; 
+	width:206px; 
+	height:9px; 
+	margin:0; 
+	padding:0; 
+	font-size:2px; 
+	background:#e6eff8 no-repeat;
+	}
+
+.left_module p{
+	margin:0; 
+	padding:0 0 5px 0; 
+	font-size:12px; 
+	color:#222; 
+	font-weight:normal
+}
+
+.left_resources p{
+	margin:2px 12px 0 12px; 
+	padding:0 0 2px 10px; 
+	font-size:12px; 
+	color:#000; 
+	font-weight:normal; 
+	background:url(/images/p-triangle.gif) left .2em no-repeat
+}
+.left_resources h3{
+	margin: 10px 12px 4px;
+    padding: 0 0 4px;
+}
+
+/*************** Right Panel **************/
+#right_panel {
+	float: right;
+	width: 555px;
+	height: auto;
+	margin: 0;
+	padding: 0;
 }
