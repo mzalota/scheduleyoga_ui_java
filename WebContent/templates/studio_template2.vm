@@ -54,7 +54,8 @@
 					</ul>
 				</div>
 				<div class="mainPanel">
-					<div id="heading" style="background-color:#999999; width:800px; height:40px; float:left; margin:1px;">
+					<img src="/images/treepose-class.jpg" style="float: right; margin: 4px" />
+					<div id="heading" style="background-color:#999999; 	max-width: 100%; min-width: 10%; height:40px; float:left; margin:1px;">
 							<div style="float:left; margin-top:10px;">
 								#if (${navDates.containsKey("<<")})
 									<a href="/${stateNameUrl}/${studioNameUrl}/${navDates.get("<<")}.html"> &lt;&lt; </a>
@@ -76,8 +77,8 @@
 					<div style="clear:both;"></div>
 					<ul>
 											
-						<img src="/images/stock-photo-14114777-doing-yoga-in-health-club.jpg" style="float: right; margin: 4px" />
-				
+						
+				<!--  stock-photo-14114777-doing-yoga-in-health-club.jpg -->
 						#foreach( $startTime in $startTimes)
 							<li>
 								<div id="menu" style="background-color:#FFD700;width:100px;float:left; margin:1px;">

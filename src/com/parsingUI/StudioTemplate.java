@@ -112,9 +112,9 @@ public class StudioTemplate extends VelocityViewServlet {
 		startTimes.addAll(schedule.keySet());
 		
 		if (events.size() > 0) {
-			ctx.put("version", "143");
+			ctx.put("version", "145");
 		} else {
-			ctx.put("version", "087 " + stateNameUrl
+			ctx.put("version", "089 " + stateNameUrl
 					+ " did not fetch Studio Object");
 		}
 		
