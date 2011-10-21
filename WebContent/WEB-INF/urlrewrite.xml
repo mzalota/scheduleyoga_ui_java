@@ -10,6 +10,16 @@
 
     <rule>
         <note>
+                If www was not specified in the domain name, redirect to it.
+        </note>
+        <condition type="server-name">^scheduleyoga.com$</condition>
+        <from>^/(.*)$</from>
+        <to type="permanent-redirect" last="true"> http://www.scheduleyoga.com/$1 </to>
+    </rule>
+
+
+    <rule>
+        <note>
             The rule means that requests to /test/status/ will be redirected to /rewrite-status
             the url will be rewritten.
         </note>
@@ -59,27 +69,33 @@
     
     <rule>
         <note>
-            ddd
+           	Date page for studios
         </note>
-        <from>/(.*)/(.*)/(20[\d]{2}-[0,1][\d]-[0,1,2,3][\d]).html</from>
+        <from>/studios/(.*)/(.*)/(20[\d]{2}-[0,1][\d]-[0,1,2,3][\d]).html</from>
         <to>/StudioTemplate?state=$1&amp;studio=$2&amp;date=$3</to>
-    </rule>
+    </rule>    
+    
+<!--     <rule> -->
+<!--         <note> -->
+<!--            	Studio's pages -->
+<!--         </note> -->
+<!--         <from>/(.*)/(.*)/(20[\d]{2}-[0,1][\d]-[0,1,2,3][\d]).html</from> -->
+<!--         <to>/StudioTemplate?state=$1&amp;studio=$2&amp;date=$3</to> -->
+<!--     </rule> -->
   
     <rule>
         <note>
-            ddd
+            Studio's home page
         </note>
-        <from>/(.*)/(.*)/</from>
+        <from>/studios/(.*)/(.*)/</from>
         <to>/StudioTemplate?state=$1&amp;studio=$2</to>
     </rule>
 
-
-
   	<rule>
         <note>
-            ddd
+            List of studios in a state
         </note>
-        <from>/(.*)/</from>
+        <from>/studios/(.*)/</from>
         <to>/ListForState?state=$1</to>
     </rule>
 
@@ -165,6 +181,7 @@
     request.setAttribute("browser", "moz") will be called.
 
     -->
+
 
 </urlrewrite>
 

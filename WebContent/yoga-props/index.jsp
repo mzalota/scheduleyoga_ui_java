@@ -1,11 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-<title>Yoga Props</title>
-
-<link href="/css/main.css" rel="stylesheet" type="text/css"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<title>Yoga Props</title>
+	
+	<link href="/css/main.css" rel="stylesheet" type="text/css"/>
+	
+	<%@ include file="../templates/beacons_header.html"%>
 </head>
 
 <body>
@@ -19,7 +21,7 @@
 			<div id="right_panel">	
 		
 				<h1>Yoga Props</h1>
-				<img src="/images/origs/stock-photo-12885455-yoga-class-outdoors-with-mid-adult-woman.jpg" style="float: right; margin: 4px" />
+				<img src="/images/women-of-different-age-practicing-yoga.jpg" style="float: right; margin: 4px" />
 				<p>
 				Props can be fantastic in promoting good alignment and a positive yoga experience for mind and body.
 				</p>

@@ -1,27 +1,25 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Find schedule of yoga classes in your area</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Schedule of Yoga Studios in ${stateName}</title>
+	<meta name="description" content="Select a yoga studio in ${stateName} and view studio's schedule"/>
+		
+	<link href="/css/main.css" rel="stylesheet" type="text/css"/>
+	
+	<style type="text/css">
+	</style>
 
-
-<link href="/css/main.css" rel="stylesheet" type="text/css"/>
-
-
-<style type="text/css">
-</style>
+	#parse("templates/beacons_header.html")
 
 </head>
 <body>
 	<div class="wrapper">
-			
-		<div>	
-			#parse("templates/header.html")		
-		</div>
-		
-		<div style="clear: both"></div>
+						
+		#parse("templates/header.html")			
+				
 		<div style="margin: 10px 0px">	
-			<h1>See yoga schedule at studios in your area (version2 $version)</h1>
+			<h1>Schedule of Yoga Studios in ${stateName}:</h1>
 		</div>
 			
 		<div class="mainPanel">		
@@ -30,11 +28,11 @@
 			</div>
 			
 			<div id="right_panel">
-				<div style="margin: 10px";/>
+				<div style="margin: 10px";></div>
 				<div id="bread">
 					<ul>
 						<li>
-							<a href="/"> Schedule Yoga </a>
+							<a href="/" title="Schedule Yoga"> Schedule Yoga </a>
 							<ul>
 								<li> &raquo; ${stateName}</li> 
 							</ul>
@@ -45,19 +43,26 @@
 				<div>
 					<h2 style="margin-bottom: 10px">View Schedule at Yoga Studios in $stateName:</h2>
 											
-					<img src="/images/stock-photo-14114777-doing-yoga-in-health-club.jpg" style="float: right; margin: 4px" />
+					<img src="/images/doing-yoga-in-health-club.jpg" style="float: right; margin: 4px" />
 				
 					<ul>
+						#set($studioCounter = 1)
 						#foreach( $studio in $studios )
-		    			<li><span class="carrot">&nbsp;</span><a href="/${stateNameUrl}/${studio.getNameForUrl()}/">${studio.getName()}</a>
-						</li>
+			    			#if($studioCounter%10 == 0)
+								</ul><div stule="margin: 7px"><hr/></div><ul>
+							#end
+			    			<li><span class="carrot">$studioCounter &gt;</span>
+			    				<a href="/studios/${stateNameUrl}/${studio.getNameForUrl()}/">${studio.getName()}</a>
+							</li>							
+							
+							#set($studioCounter = $studioCounter + 1)
+							
 						#end
-					</ul>
-					
+					</ul>					
 				</div>				
 			</div>			
 			<div style="clear: both"></div>	
-		</div>	
+		</div>			
 	</div> 
 	
 	<!-- end of wrapper  --> 	

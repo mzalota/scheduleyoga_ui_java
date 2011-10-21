@@ -1,12 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-<title>Yoga Styles</title>
-
-<link href="/css/main.css" rel="stylesheet" type="text/css"/>
-
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<title>Yoga Styles</title>
+	
+	<link href="/css/main.css" rel="stylesheet" type="text/css"/>
+	
+	<%@ include file="../templates/beacons_header.html"%>
 </head>
 <body>
 	<div class="wrapper">
@@ -18,7 +19,7 @@
 			
 			<div id="right_panel">	
 				<h1>Yoga Styles</h1>
-				<img src="/images/origs/stock-photo-17660109-flexibility.jpg" style="float: right; margin: 4px" />
+				<img src="/images/flexibility.jpg" style="float: right; margin: 4px" />
 				<h2>Ashtanga yoga or Power Yoga</h2> 
 				<p> 
 				Ashtanga yoga or Power Yoga is a fast-paced, intense yoga style. It focuses on constant movement from one pose to the next. While most other forms of yoga slowly move from one asana to another, in Ashtanga yoga one pose leads to the next. This is a great style for people who are physically fit and strong.
@@ -30,7 +31,7 @@
 				
 				<h2>Hatha Yoga </h2>
 				<p>
-				Hatha Yoga was introduced by Yogi Swatmarama, a 15th century Hindu sage.  Today’s classes generally offer basic yoga poses at a gentle pace.  Hatha literally means the sun and the moon. It reflects the union of opposites. When you perform yoga, you try to unite your mind and body and bring them under your control. 
+				Hatha Yoga was introduced by Yogi Swatmarama, a 15th century Hindu sage.  Today's classes generally offer basic yoga poses at a gentle pace.  Hatha literally means the sun and the moon. It reflects the union of opposites. When you perform yoga, you try to unite your mind and body and bring them under your control. 
 				</p>
 				
 				<h2>Iyengar Yoga</h2>
@@ -50,7 +51,7 @@
 				
 				<h2>Sivananda Yoga</h2>
 				<p>
-				Sivananda Yoga includes 12 ‘asanas’, breathing techniques, meditative states and chanting of mantras. The yoga helps keep your body and mind in balance.
+				Sivananda Yoga includes 12 'asanas', breathing techniques, meditative states and chanting of mantras. The yoga helps keep your body and mind in balance.
 				</p>
 			</div>
 			<div style="clear: both"></div>	

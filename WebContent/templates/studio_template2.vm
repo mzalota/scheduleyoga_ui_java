@@ -1,26 +1,25 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Schedule for Yoga Studio ABC</title>
+<head profile="http://microformats.org/profile/hcalendar">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Schedule for Yoga Studio: ${studio.getName()}, ${stateName}</title>
+	<meta name="description" content="View next week's schedule for yoga studio ${studio.getName()}, ${stateName}"/>
+	
+	<link href="/css/main.css" rel="stylesheet" type="text/css"/>	
+	
+	<style type="text/css">
+	</style>
 
-<link href="/css/main.css" rel="stylesheet" type="text/css"/>
-
-
-<style type="text/css">
-</style>
-
+	#parse("templates/beacons_header.html")
+		
 </head>
 <body>
 	<div class="wrapper">
 	
-		<div>	
-			#parse("templates/header.html")
-		</div>
-	
-		<div style="clear: both"></div>
+		#parse("templates/header.html")
+		
 		<div style="margin: 10px 0px">
-			<h1>Schedule for studio <a href="${studio.getUrlSchedule()}">${studio.getName()}</a> (version $version)</h1>
+			<h1>Schedule for Yoga Studio: <a href="${studio.getUrlHome()}" target="_blank" rel="nofollow" title="${studio.getName()} pain page">${studio.getName()}</a></h1>
 		</div>
 		
 		<div class="mainPanel">		
@@ -33,73 +32,80 @@
 						<p><a href="/yoga-props/">Yoga Props</a></p>
 					</div>
 				</div>
+				<img src="/images/treepose-class.jpg" style="float: center; margin: 4px" />
 			</div>
 			
 			<div id="right_panel">
-				<div style="margin: 10px";/>
+				<div style="margin: 10px";></div>
 
-		
 				<div id="bread">
 					<ul>
 						<li>
 							<a href="/"> Schedule Yoga </a>
 							<ul>
-								<li> &raquo; <a style="text-decoration: underline;" href="/${stateNameUrl}/"> ${stateName}</a>
+								<li> &raquo; <a style="text-decoration: underline;" href="/studios/${stateNameUrl}/"> ${stateName}</a>
 									<ul> 
-										<li>&raquo; <a style="text-decoration: underline;" href="/${stateNameUrl}/${studioNameUrl}/"> ${studio.getName()}</a> </li>
+										<li>&raquo; <a style="text-decoration: underline;" href="/studios/${stateNameUrl}/${studioNameUrl}/"> ${studio.getName()}</a> </li>
 									</ul>
 								</li>
 							</ul>
 						</li>
 					</ul>
 				</div>
-				<div class="mainPanel">
-					<img src="/images/treepose-class.jpg" style="float: right; margin: 4px" />
+
+				<div>					
+					<p> The schedule for <a rel="nofollow" href="${studio.getUrlHome()}" title="$studio.getName() yoga studio's home page" target="_blank">Yoga Studio &quot;${studio.getName()}&quot;</a> 
+					presented below was built from the studio's schedule located <a rel="nofollow" href="${studio.getUrlSchedule()}" title="${studio.getName()}'s original schedule" target="_blank">here</a> 
+					</p>     
+					
 					<div id="heading" style="background-color:#999999; 	max-width: 100%; min-width: 10%; height:40px; float:left; margin:1px;">
 							<div style="float:left; margin-top:10px;">
 								#if (${navDates.containsKey("<<")})
-									<a href="/${stateNameUrl}/${studioNameUrl}/${navDates.get("<<")}.html"> &lt;&lt; </a>
+									<a href="/studios/${stateNameUrl}/${studioNameUrl}/${navDates.get("<<")}.html"> &lt;&lt; </a>
 								#end
 								#if (${navDates.containsKey("<")})
-									<a href="/${stateNameUrl}/${studioNameUrl}/${navDates.get("<")}.html"> &lt; </a>
+									<a href="/studios/${stateNameUrl}/${studioNameUrl}/${navDates.get("<")}.html"> &lt; </a>
 								#end
 							</div>
-							<div style="float:left;"><h2>Yoga Classes </br>  $date.format('MMM d, yyyy',$schedDate) </h2></div>   
+							<div style="float:left;"><h2>Yoga Classes <br />  $date.format('MMM d, yyyy',$schedDate) </h2></div>   
 							<div style="float:left; margin-top:10px;">
 								#if (${navDates.containsKey(">")})
-									<a href="/$stateNameUrl/${studioNameUrl}/${navDates.get(">")}.html"> &gt; </a>
+									<a href="/studios/$stateNameUrl/${studioNameUrl}/${navDates.get(">")}.html"> &gt; </a>
 								#end
 								#if (${navDates.containsKey(">>")}) 
-									<a href="/$stateNameUrl/${studioNameUrl}/${navDates.get(">>")}.html"> &gt;&gt; </a>
+									<a href="/studios/$stateNameUrl/${studioNameUrl}/${navDates.get(">>")}.html"> &gt;&gt; </a>
 								#end
 							</div>
 					</div>
 					<div style="clear:both;"></div>
+					
 					<ul>
-											
-						
-				<!--  stock-photo-14114777-doing-yoga-in-health-club.jpg -->
 						#foreach( $startTime in $startTimes)
+							<span class="vevent">
 							<li>
-								<div id="menu" style="background-color:#FFD700;width:100px;float:left; margin:1px;">
-									<span class="carrot">�&nbsp;</span><a href="/new-york/">$date.format('h:mm a',$startTime)</a> 
+								<div id="menu" style="background-color:#FFD700;width:100px;float:left; margin:1px;">									
+									<span class="carrot">&lt;&lt;&nbsp;</span>
+									<abbr class="dtstart" title="${date.format('yyyy-MM-dd',$schedDate)}T${date.format('HH:mm:00.000',$startTime)}">$date.format('h:mm a',$startTime)</abbr> 
 								</div>
 								<div id="content" style="background-color:#EEEEEE;width:400px;float:left;margin:1px;">
 									#foreach( $event in $schedule.get($startTime) )
 										<div id="content" style="background-color:#AAAAAA;width:200px;float:left;">
-											${event.getComment()}
-											<div style="display:none;"> <br> 
-											(${event.getInstructorName()}) </div>
+											<span class="summary location">${event.getComment()}</span>
+											<div style="float: right; color: #000000"> 
+												  Instructor: <span class="organizer">${event.getInstructorName()}</span> 
+											</div>
 										</div>
 									#end
 								</div>
 							</li>
-							<div style="clear:both;"></div>
+							</span>
+							<div style="clear:both;"> </div>
 						#end
 					</ul>
 				</div>
 			</div>
-		</div>
+			<div style="clear: both"></div>
+		</div>		
 	</div>
 	<div style="clear: both"></div>
 	<div>	
