@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head profile="http://microformats.org/profile/hcalendar">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Schedule for Yoga Teacher: ${instructor.getName()}, ${stateName}</title>
+	<meta name="description" content="View schedule for yoga teacher ${instructor.getName()}, ${stateName}"/>
+	
+	<link href="/css/main.css" rel="stylesheet" type="text/css"/>	
+	
+	<style type="text/css">
+	</style>
+
+	#parse("templates/beacons_header.html")
+		
+</head>
+<body>
+	<div class="wrapper">
+	
+		#parse("templates/header.html")
+		
+		<div style="margin: 10px 0px">
+			<h1>Schedule for Yoga Teacher: ${instructor.getName()}</h1>
+		</div>
+		
+		<div class="mainPanel">		
+			<div id="left_panel">
+				<div class="left_resources_wrap">
+					<div class="left_resources">
+						<h3>Yoga Resources</h3>
+						<p><a href="/yoga/">What is Yoga</a></p>
+						<p><a href="/yoga-styles/">Yoga Styles</a></p>
+						<p><a href="/yoga-props/">Yoga Props</a></p>
+					</div>
+				</div>
+				<img src="/images/treepose-class.jpg" style="float: center; margin: 4px" />
+			</div>
+			
+			<div id="right_panel">
+				<div style="margin: 10px";></div>
+
+				<div id="bread">
+					<ul>
+						<li>
+							<a href="/"> Schedule Yoga </a>
+							<ul>
+								<li> &raquo; <a style="text-decoration: underline;" href="/teachers/${stateNameUrl}/"> ${stateName}</a>
+									<ul> 
+										<li>&raquo; <a style="text-decoration: underline;" href="/teachers/${stateNameUrl}/${instructor.getNameForUrl()}/"> ${instructor.getName()}</a> </li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+
+				<div>					
+					#if (${studios.size()}>0) 
+					<p> The schedule for Yoga Teacher <strong>${instructor.getName()}</strong>					
+						presented below was built from the schedules at the following yoga studios:   
+						#foreach( $studio in $studios )
+							<a href="${studio.getUrlHome()}" rel="nofollow" title="Yoga studio ${studio.getName()} home page" target="_blank"> ${studio.getName()}</a>					
+						#end
+					</p>
+					#else
+					<p> According to our records the schedule for Yoga Teacher <strong>${instructor.getName()}</strong>
+						is empty on $date.format('EEE, MMM d, yyyy',$schedDate).
+					</p>	
+					#end
+					     
+					
+					<div style="background-color:#999999; 	max-width: 100%; min-width: 10%; height:40px; float:left; margin:1px;">
+							<div id="date_nav" style="float:left; margin-top:5px;">
+								#if (${navDates.containsKey("<<")})
+									<a href="/teachers/${stateNameUrl}/${instructor.getNameForUrl()}/${navDates.get("<<")}.html"> 
+									<img src="/images/prev-week.gif"/>
+									</a>
+								#end
+								#if (${navDates.containsKey("<")})
+									<a href="/teachers/${stateNameUrl}/${instructor.getNameForUrl()}/${navDates.get("<")}.html">
+									<img src="/images/prev-date.gif"/> 
+									</a>
+								#end
+							</div>
+							<div style="float:left;"><h2>Yoga Classes <br />  $date.format('EEE, MMM d, yyyy',$schedDate) </h2></div>   
+							<div id="date_nav" style="float:left; margin-top:5px;">
+								#if (${navDates.containsKey(">")})
+									<a href="/teachers/$stateNameUrl/${instructor.getNameForUrl()}/${navDates.get(">")}.html">
+									<img src="/images/next-date.gif"/>
+									</a>
+								#end
+								#if (${navDates.containsKey(">>")}) 
+									<a href="/teachers/$stateNameUrl/${instructor.getNameForUrl()}/${navDates.get(">>")}.html">
+									<img src="/images/next-week.gif"/>
+									</a>
+								#end
+							</div>
+					</div>
+					<div style="clear:both;"></div>
+					
+					<ul>
+						#foreach( $startTime in $startTimes)
+							<span class="vevent">
+							<li>
+								<div id="menu" style="background-color:#FFD700;width:100px;float:left; margin:1px;">									
+									<span class="carrot">&nbsp;</span>
+									<abbr class="dtstart" title="${date.format('yyyy-MM-dd',$schedDate)}T${date.format('HH:mm:00.000',$startTime)}">$date.format('h:mm a',$startTime)</abbr> 
+								</div>
+								<div id="content" style="background-color:#EEEEEE;width:400px;float:left;margin:1px;">
+									#set($event = $schedule.get($startTime).get(0))
+									<span class="summary">${event.getComment()}</span>	
+									<div style="float: right; color: #000000">
+										<span class="location">
+											Studio: 
+											<a href="/studios/$stateNameUrl/${event.getStudio().getNameForUrl()}/${date.format('yyyy-MM-dd',$schedDate)}.html" title="Schedule for Yoga Studio: ${event.getStudio().getName()}"> 
+											${event.getStudio().getName()}
+											</a>
+										</span> 									
+									</div>	
+								</div>
+							</li>
+							</span>
+							<div style="clear:both;"> </div>
+						#end
+					</ul>
+				</div>
+			</div>
+			<div style="clear: both"></div>
+		</div>		
+	</div>
+	<div style="clear: both"></div>
+	<div>	
+		#parse("templates/footer.html")
+	</div>
+	
+</body>
+</html>

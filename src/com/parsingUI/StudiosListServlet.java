@@ -30,13 +30,13 @@ import com.scheduleyoga.parser.Helper;
 /**
  * Servlet implementation class ListForState
  */
-public class ListForState extends VelocityViewServlet {
+public class StudiosListServlet extends VelocityViewServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ListForState() {
+    public StudiosListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

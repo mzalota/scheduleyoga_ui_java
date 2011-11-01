@@ -50,13 +50,13 @@ import com.scheduleyoga.parser.Helper;
 /**
  * Servlet implementation class StudioTemplate
  */
-public class StudioTemplate extends VelocityViewServlet {
+public class StudioServlet extends VelocityViewServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public StudioTemplate() {
+	public StudioServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -105,7 +105,6 @@ public class StudioTemplate extends VelocityViewServlet {
 		List<Event> events = Event.findEventsForStudioForDate(studioNameUrl, schedDate);
 
 		Studio studio = Studio.createFromNameURL(studioNameUrl);
-//		System.out.println("Studio is: "+ studio.toString());	
 		
 		Map<Date, List<Event>> schedule = GroupList.group(events, "startTime");
 		Set<Date> startTimes = new TreeSet<Date>();
@@ -132,7 +131,7 @@ public class StudioTemplate extends VelocityViewServlet {
 		ctx.put("navDates", navDates);
 		ctx.put("studio", studio);
 		
-		String template = "templates/studio_template2.vm";
+		String template = "templates/studio.vm";
 		Template outty = null;
 		try {
 			outty = getTemplate(template);

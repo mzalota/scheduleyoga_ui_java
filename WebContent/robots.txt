@@ -3,4 +3,5 @@ Disallow: /intranet/
 Disallow: /admin/
 Disallow: /templates/
 Disallow: /WEB_INF/
+Disallow: /META-INF/
 Disallow: /web-console/

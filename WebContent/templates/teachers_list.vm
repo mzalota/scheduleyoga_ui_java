@@ -2,8 +2,8 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Schedule of Yoga Studios in ${stateName}</title>
-	<meta name="description" content="Select a yoga studio in ${stateName} and view studio's schedule"/>
+	<title>Schedule of Yoga Teachers in ${stateName}</title>
+	<meta name="description" content="Select a yoga teacher in ${stateName} and view this teacher's schedule"/>
 		
 	<link href="/css/main.css" rel="stylesheet" type="text/css"/>
 	
@@ -19,7 +19,7 @@
 		#parse("templates/header.html")			
 				
 		<div style="margin: 10px 0px">	
-			<h1>Schedule of Yoga Studios in ${stateName}:</h1>
+			<h1>Schedule of Yoga Teachers in ${stateName}:</h1>
 		</div>
 			
 		<div class="mainPanel">		
@@ -41,21 +41,21 @@
 				</div>
 				
 				<div>
-					<h2 style="margin-bottom: 10px">View Schedule at Yoga Studios in $stateName:</h2>
+					<h2 style="margin-bottom: 10px">View Schedule of Yoga Teachers in $stateName:</h2>
 											
 					<img src="/images/doing-yoga-in-health-club.jpg" style="float: right; margin: 4px" />
 				
 					<ul>
-						#set($studioCounter = 1)
-						#foreach( $studio in $studios )
-			    			#if($studioCounter%10 == 0)
+						#set($instructorCounter = 1)
+						#foreach( $instructor in $instructors )
+			    			#if($instructorCounter%10 == 0)
 								</ul><div stule="margin: 7px"><hr/></div><ul>
 							#end
-			    			<li><span class="carrot">$studioCounter </span>
-			    				<a href="/studios/${stateNameUrl}/${studio.getNameForUrl()}/">${studio.getName()}</a>
+			    			<li><span class="carrot">$instructorCounter</span>
+			    				<a href="/teachers/${stateNameUrl}/${instructor.getNameForUrl()}/">${instructor.getName()}</a>
 							</li>							
 							
-							#set($studioCounter = $studioCounter + 1)
+							#set($instructorCounter = $instructorCounter + 1)
 							
 						#end
 					</ul>					

@@ -69,10 +69,34 @@
     
     <rule>
         <note>
+           	Date page for Teacher
+        </note>
+        <from>/teachers/(.*)/(.*)/(20[\d]{2}-[0,1][\d]-[0,1,2,3][\d]).html</from>
+        <to>/TeacherServlet?state=$1&amp;teacher=$2&amp;date=$3</to>
+    </rule>    
+    
+    <rule>
+        <note>
+            Teacher's home page
+        </note>
+        <from>/teachers/(.*)/(.*)/</from>
+        <to>/TeacherServlet?state=$1&amp;teacher=$2</to>
+    </rule>
+    
+     <rule>
+        <note>
+            List of teachers in a state
+        </note>
+        <from>/teachers/(.*)/</from>
+        <to>/TeachersListServlet?state=$1</to>
+    </rule>
+    
+    <rule>
+        <note>
            	Date page for studios
         </note>
         <from>/studios/(.*)/(.*)/(20[\d]{2}-[0,1][\d]-[0,1,2,3][\d]).html</from>
-        <to>/StudioTemplate?state=$1&amp;studio=$2&amp;date=$3</to>
+        <to>/StudioServlet?state=$1&amp;studio=$2&amp;date=$3</to>
     </rule>    
     
 <!--     <rule> -->
@@ -88,7 +112,7 @@
             Studio's home page
         </note>
         <from>/studios/(.*)/(.*)/</from>
-        <to>/StudioTemplate?state=$1&amp;studio=$2</to>
+        <to>/StudioServlet?state=$1&amp;studio=$2</to>
     </rule>
 
   	<rule>
@@ -96,7 +120,7 @@
             List of studios in a state
         </note>
         <from>/studios/(.*)/</from>
-        <to>/ListForState?state=$1</to>
+        <to>/StudiosListServlet?state=$1</to>
     </rule>
 
 

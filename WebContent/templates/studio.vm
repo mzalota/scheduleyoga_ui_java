@@ -19,7 +19,7 @@
 		#parse("templates/header.html")
 		
 		<div style="margin: 10px 0px">
-			<h1>Schedule for Yoga Studio: <a href="${studio.getUrlHome()}" target="_blank" rel="nofollow" title="${studio.getName()} pain page">${studio.getName()}</a></h1>
+			<h1>Schedule for Yoga Studio: <a href="${studio.getUrlHome()}" target="_blank" rel="nofollow" title="${studio.getName()} main page">${studio.getName()}</a></h1>
 		</div>
 		
 		<div class="mainPanel">		
@@ -58,22 +58,35 @@
 					presented below was built from the studio's schedule located <a rel="nofollow" href="${studio.getUrlSchedule()}" title="${studio.getName()}'s original schedule" target="_blank">here</a> 
 					</p>     
 					
-					<div id="heading" style="background-color:#999999; 	max-width: 100%; min-width: 10%; height:40px; float:left; margin:1px;">
-							<div style="float:left; margin-top:10px;">
+					<div  style="background-color:#999999; 	max-width: 100%; min-width: 10%; height:40px; float:left; margin:1px;">
+							<div id="date_nav" style="float:left; margin-top:5px;">
 								#if (${navDates.containsKey("<<")})
-									<a href="/studios/${stateNameUrl}/${studioNameUrl}/${navDates.get("<<")}.html"> &lt;&lt; </a>
+									#set( $prevWeek = $navDates.get("<<"))
+									<a href="/studios/${stateNameUrl}/${studioNameUrl}/${navDates.get("<<")}.html"
+									title="${navDates.get("<<")} Schedule for Yoga Studio: ${studio.getName()}, ${stateName}">
+										<img src="/images/prev-week.gif"/>
+									</a>
 								#end
 								#if (${navDates.containsKey("<")})
-									<a href="/studios/${stateNameUrl}/${studioNameUrl}/${navDates.get("<")}.html"> &lt; </a>
+									<a href="/studios/${stateNameUrl}/${studioNameUrl}/${navDates.get("<")}.html"
+									title="${navDates.get("<")} Schedule for Yoga Studio: ${studio.getName()}, ${stateName}">
+										<img src="/images/prev-date.gif"/>
+									</a>
 								#end
 							</div>
-							<div style="float:left;"><h2>Yoga Classes <br />  $date.format('MMM d, yyyy',$schedDate) </h2></div>   
-							<div style="float:left; margin-top:10px;">
+							<div style="float:left;"><h2>Yoga Classes <br />  $date.format('EEE, MMM d, yyyy',$schedDate) </h2></div>   
+							<div id="date_nav" style="float:left; margin-top:5px;">
 								#if (${navDates.containsKey(">")})
-									<a href="/studios/$stateNameUrl/${studioNameUrl}/${navDates.get(">")}.html"> &gt; </a>
+									<a href="/studios/$stateNameUrl/${studioNameUrl}/${navDates.get(">")}.html"
+									title="${navDates.get(">")} Schedule for Yoga Studio: ${studio.getName()}, ${stateName}">
+										<img src="/images/next-date.gif"/>
+									</a>
 								#end
 								#if (${navDates.containsKey(">>")}) 
-									<a href="/studios/$stateNameUrl/${studioNameUrl}/${navDates.get(">>")}.html"> &gt;&gt; </a>
+									<a href="/studios/$stateNameUrl/${studioNameUrl}/${navDates.get(">>")}.html"
+									title="${navDates.get(">>")} Schedule for Yoga Studio: ${studio.getName()}, ${stateName}">
+										<img src="/images/next-week.gif"/>
+									</a>
 								#end
 							</div>
 					</div>
@@ -84,15 +97,23 @@
 							<span class="vevent">
 							<li>
 								<div id="menu" style="background-color:#FFD700;width:100px;float:left; margin:1px;">									
-									<span class="carrot">&lt;&lt;&nbsp;</span>
+									<span class="carrot"&lt;&lt;&nbsp;</span>
+									
 									<abbr class="dtstart" title="${date.format('yyyy-MM-dd',$schedDate)}T${date.format('HH:mm:00.000',$startTime)}">$date.format('h:mm a',$startTime)</abbr> 
 								</div>
-								<div id="content" style="background-color:#EEEEEE;width:400px;float:left;margin:1px;">
+								<div id="content" style="width:408px;float:left;margin:1px 0px 1px 0px;">
 									#foreach( $event in $schedule.get($startTime) )
-										<div id="content" style="background-color:#AAAAAA;width:200px;float:left;">
+										<div id="content" style="background-color:#EEEEEE;width:200px;float:left;margin:0px 1px 0px 1px;">
 											<span class="summary location">${event.getComment()}</span>
-											<div style="float: right; color: #000000"> 
-												  Instructor: <span class="organizer">${event.getInstructorName()}</span> 
+											<div style="float: right; color: #000000;"> 
+												#if ($event.getInstructor())
+													Teacher: 
+													<a href="/teachers/${stateNameUrl}/${event.getInstructor().getNameForUrl()}/${date.format('yyyy-MM-dd',$schedDate)}.html" title="Schedule for Yoga Teacher: ${event.getInstructor().getName()}, ${stateName}">
+														<span class="organizer">${event.getInstructorName()}</span>
+													</a>													
+												#else
+													Teacher: <span class="organizer">${event.getInstructorName()}</span>	
+												#end
 											</div>
 										</div>
 									#end
