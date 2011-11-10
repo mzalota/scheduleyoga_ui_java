@@ -22,21 +22,10 @@
 			<h1>Schedule for Yoga Teacher: ${instructor.getName()}</h1>
 		</div>
 		
-		<div class="mainPanel">		
-			<div id="left_panel">
-				<div class="left_resources_wrap">
-					<div class="left_resources">
-						<h3>Yoga Resources</h3>
-						<p><a href="/yoga/">What is Yoga</a></p>
-						<p><a href="/yoga-styles/">Yoga Styles</a></p>
-						<p><a href="/yoga-props/">Yoga Props</a></p>
-					</div>
-				</div>
-				<img src="/images/treepose-class.jpg" style="float: center; margin: 4px" />
-			</div>
+		<div class="mainPanel">					
 			
-			<div id="right_panel">
-				<div style="margin: 10px";></div>
+			<div id=""> <!-- right_panel   --> 
+				<div style="margin: 10px ";></div>
 
 				<div id="bread">
 					<ul>
@@ -54,16 +43,12 @@
 				</div>
 
 				<div>					
-					#if (${studios.size()}>0) 
-					<p> The schedule for Yoga Teacher <strong>${instructor.getName()}</strong>					
-						presented below was built from the schedules at the following yoga studios:   
-						#foreach( $studio in $studios )
-							<a href="${studio.getUrlHome()}" rel="nofollow" title="Yoga studio ${studio.getName()} home page" target="_blank"> ${studio.getName()}</a>					
-						#end
+					#if (${studios.size()} > 0) 
+					<p> The schedule for Yoga Teacher <strong>${instructor.getName()}</strong> over next 7 days includes ${events.size()} classes. 						
 					</p>
 					#else
 					<p> According to our records the schedule for Yoga Teacher <strong>${instructor.getName()}</strong>
-						is empty on $date.format('EEE, MMM d, yyyy',$schedDate).
+						is empty for the week starting on $date.format('EEE, MMM d, yyyy',$schedDate).
 					</p>	
 					#end
 					     
@@ -75,7 +60,7 @@
 									<img src="/images/prev-week.gif"/>
 									</a>
 								#end
-								#if (${navDates.containsKey("<")})
+								#if (${navDates.containsKey("<")} and 1==2 )
 									<a href="/teachers/${stateNameUrl}/${instructor.getNameForUrl()}/${navDates.get("<")}.html">
 									<img src="/images/prev-date.gif"/> 
 									</a>
@@ -83,7 +68,7 @@
 							</div>
 							<div style="float:left;"><h2>Yoga Classes <br />  $date.format('EEE, MMM d, yyyy',$schedDate) </h2></div>   
 							<div id="date_nav" style="float:left; margin-top:5px;">
-								#if (${navDates.containsKey(">")})
+								#if (${navDates.containsKey(">")} and 1==2)
 									<a href="/teachers/$stateNameUrl/${instructor.getNameForUrl()}/${navDates.get(">")}.html">
 									<img src="/images/next-date.gif"/>
 									</a>
@@ -97,6 +82,7 @@
 					</div>
 					<div style="clear:both;"></div>
 					
+					#if (1==2)
 					<ul>
 						#foreach( $startTime in $startTimes)
 							<span class="vevent">
@@ -111,7 +97,7 @@
 									<div style="float: right; color: #000000">
 										<span class="location">
 											Studio: 
-											<a href="/studios/$stateNameUrl/${event.getStudio().getNameForUrl()}/${date.format('yyyy-MM-dd',$schedDate)}.html" title="Schedule for Yoga Studio: ${event.getStudio().getName()}"> 
+											<a href="/studios/$stateNameUrl/${event.getStudio().getNameForUrl()}/${date.format('yyyy-MM-dd',$event.getStartTime())}.html" title="Schedule for Yoga Studio: ${event.getStudio().getName()}"> 
 											${event.getStudio().getName()}
 											</a>
 										</span> 									
@@ -122,6 +108,23 @@
 							<div style="clear:both;"> </div>
 						#end
 					</ul>
+					#end
+					<div>
+						
+					 	${schHTMLCode}
+					</div>
+					#if (${studios.size()}>0) 
+					<p> The schedule for Yoga Teacher <strong>${instructor.getName()}</strong>					
+						presented above was built from the schedules at the following yoga studios:   
+						<ul>
+						#foreach( $studio in $studios )
+							<li>
+								<span class="carrot">&nbsp;</span> <a href="${studio.getUrlHome()}" rel="nofollow" title="Yoga studio ${studio.getName()} home page" target="_blank"> ${studio.getName()}</a>
+							</li>					
+						#end
+						</ul>
+					</p>
+					#end
 				</div>
 			</div>
 			<div style="clear: both"></div>

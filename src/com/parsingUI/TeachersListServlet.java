@@ -71,7 +71,7 @@ public class TeachersListServlet extends VelocityViewServlet {
 		
 		Session session = DBAccess.openSession();
 		
-		return (List<Instructor>) session.createQuery("from Instructor").list();
+		return (List<Instructor>) session.createQuery("from Instructor order by name").list();
 	}
 	
 }

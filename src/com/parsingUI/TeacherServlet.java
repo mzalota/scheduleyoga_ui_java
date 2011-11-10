@@ -45,6 +45,7 @@ import org.hibernate.cfg.Configuration;
 import com.gargoylesoftware.htmlunit.html.HtmlTableCell;
 import com.scheduleyoga.common.GroupList;
 import com.scheduleyoga.dao.Studio;
+import com.scheduleyoga.parser.CalendarRenderer;
 import com.scheduleyoga.parser.Event;
 import com.scheduleyoga.parser.Helper;
 import com.scheduleyoga.dao.Instructor;
@@ -93,12 +94,19 @@ public class TeacherServlet extends VelocityViewServlet {
 	 */
 	protected Template buildStudioPage(Context ctx, String instructorNameUrl, String stateNameUrl, Date schedDate) {
 		
-		
-
 		//Studio studio = Studio.createFromNameURL(studioNameUrl);
 		Instructor instructor = Instructor.createFromNameURL(instructorNameUrl);
 		
-		List<Event> events = Event.findEventsForInstructorForDate(instructor, schedDate);
+		Map<Date,Map<Integer,Event>> sch = new HashMap<Date,Map<Integer, Event>>();
+		
+		List<Event> events = new ArrayList<Event>();
+		
+		for (int i=0; i<7; i++) {
+			Calendar cal = new GregorianCalendar();
+			cal.setTime(schedDate);
+			cal.add(Calendar.DATE, i);
+			events.addAll(Event.findEventsForInstructorForDate(instructor, cal.getTime()));
+		}		
 		
 		//Extract all studios into separate Set
 		Set<Studio> studios = new HashSet<Studio>();
@@ -106,17 +114,15 @@ public class TeacherServlet extends VelocityViewServlet {
 			studios.add(event.getStudio());
 		}
 		
+		CalendarRenderer renderer = CalendarRenderer.createNew();
+		renderer.addEvents(events);
+		String schHTMLCode = renderer.render(schedDate,7);	
+		
 		Map<Date, List<Event>> schedule = GroupList.group(events, "startTime");
 		Set<Date> startTimes = new TreeSet<Date>();
 		startTimes.addAll(schedule.keySet());
 		
-		if (events.size() > 0) {
-			ctx.put("version", "161");
-		} else {
-			ctx.put("version", "101 " + stateNameUrl
-					+ " did not fetch Studio Object");
-		}
-		System.out.println("in Teacher Servlet version 161");
+		System.out.println("in Teacher Servlet version 193 ");
 		
 		Map<String, String> navDates = initializeNavDates(schedDate);		
 		
@@ -131,6 +137,8 @@ public class TeacherServlet extends VelocityViewServlet {
 		ctx.put("navDates", navDates);
 		ctx.put("instructor", instructor);
 		ctx.put("studios", studios);
+		ctx.put("schHTMLCode", schHTMLCode);
+		
 		
 		String template = "templates/teacher.vm";
 		Template outty = null;

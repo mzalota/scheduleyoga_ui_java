@@ -116,6 +116,15 @@ ul {
 	background:url(/images/p-triangle.gif) left .2em no-repeat
 }
 
+.carrot_compact {
+	margin:2px 2px 0 2px; 
+	padding:0 0 2px 2px; 
+	font-size:12px; 
+	color:#000; 
+	font-weight:normal; 
+	background:url(/images/p-triangle.gif) left .2em no-repeat
+}
+
 /*************** Bread crums **************/
 
 #bread {
@@ -248,3 +257,40 @@ ul {
 #date_nav a {
 text-decoration: none;
 }
+
+/*************** Calendar Sheet **************/
+.calendar tr {
+	background-color: #EEEEEE;
+	max-width: 820px;
+	min-width: 500px;
+	margin: 1px;	
+}
+
+.calendar td {
+	min-width:85px;
+	margin:1px;	 
+}
+
+.calendar th {
+	font-weight:bold
+}
+
+.calendar a {
+	text-decoration: underline;
+}
+
+.cal_time_cell {
+	background-color: #FFD700;
+	min-width: 50px; 
+}
+
+.cal_info_cell {
+	background-color: #EEEEEE;
+	color: #900;
+}
+
+.cal_studio_name {	
+	color: #000;
+	float: right;
+}
+
