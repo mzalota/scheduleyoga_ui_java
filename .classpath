@@ -16,5 +16,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="/SchYogaParser/bin/com/scheduleyoga/parser"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Velocity"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JUnit"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

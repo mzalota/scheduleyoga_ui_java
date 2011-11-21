@@ -122,9 +122,7 @@ public class TeacherServlet extends VelocityViewServlet {
 		Set<Date> startTimes = new TreeSet<Date>();
 		startTimes.addAll(schedule.keySet());
 		
-		System.out.println("in Teacher Servlet version 193 ");
-		
-		Map<String, String> navDates = initializeNavDates(schedDate);		
+		System.out.println("in Teacher Servlet version 219 countEvents : "+renderer.countEvents());
 		
 		String stateName = WordUtils.capitalize(StringUtils.replace(stateNameUrl, "-", " "));		
 		
@@ -134,13 +132,13 @@ public class TeacherServlet extends VelocityViewServlet {
 		ctx.put("stateName", stateName);
 		ctx.put("stateNameUrl", stateNameUrl);
 		ctx.put("schedDate", schedDate);
-		ctx.put("navDates", navDates);
 		ctx.put("instructor", instructor);
 		ctx.put("studios", studios);
 		ctx.put("schHTMLCode", schHTMLCode);
+		ctx.put("renderer", renderer);
+		ctx.put("thisWeek", true);
 		
-		
-		String template = "templates/teacher.vm";
+		String template = "templates/teacher2.vm";
 		Template outty = null;
 		try {
 			outty = getTemplate(template);
@@ -156,60 +154,60 @@ public class TeacherServlet extends VelocityViewServlet {
 		return outty;
 	}
 
-	/**
-	 * @param schedDate
-	 * @return
-	 */
-	protected Map<String, String> initializeNavDates(Date schedDate) {
-		int DAYS_AHEAD_TO_SHOW = 9;
-		
-		Date today = new Date();
-		
-		long dayDiff = Helper.createNew().getDayDiffWithToday(schedDate);
-		
-		Map<String, String> navDates = new HashMap<String, String>(4);
-		Calendar cal = new GregorianCalendar();
-		
-		if (dayDiff > 0){
-			cal.setTime(schedDate);
-			cal.add(Calendar.DATE , -1);
-			String prevDateStr = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
-			navDates.put("<",prevDateStr);
-		}
-		
-		if (dayDiff > 7){
-			cal.setTime(schedDate);
-			cal.add(Calendar.DATE , -7);
-			String prevWeekDateStr = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
-			navDates.put("<<",prevWeekDateStr);
-		} else if (dayDiff > 0){
-			cal.setTime(today);
-			String prevWeekDateStr = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
-			navDates.put("<<",prevWeekDateStr);
-		}
-		
-		if (dayDiff < (DAYS_AHEAD_TO_SHOW-1)){
-			cal.setTime(schedDate);
-			cal.add(Calendar.DATE , 1);
-			String nextDateStr = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
-			navDates.put(">",nextDateStr);
-		}
-		
-		long daysTillLimit = DAYS_AHEAD_TO_SHOW - dayDiff;
-		if (daysTillLimit<=7 && daysTillLimit>1){
-			cal.setTime(today);
-			cal.add(Calendar.DATE , DAYS_AHEAD_TO_SHOW);
-			String nextWeekDateStr = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
-			navDates.put(">>",nextWeekDateStr);
-		} else if (daysTillLimit>7) {
-			cal.setTime(schedDate);
-			cal.add(Calendar.DATE , 7);
-			String nextWeekDateStr = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
-			navDates.put(">>",nextWeekDateStr);
-		}
-		
-		System.out.println("date diff "+dayDiff+" days till limit "+daysTillLimit) ;
-		
-		return navDates;
-	}
+//	/**
+//	 * @param schedDate
+//	 * @return
+//	 */
+//	protected Map<String, String> initializeNavDates(Date schedDate) {
+//		int DAYS_AHEAD_TO_SHOW = 9;
+//		
+//		Date today = new Date();
+//		
+//		long dayDiff = Helper.createNew().getDayDiffWithToday(schedDate);
+//		
+//		Map<String, String> navDates = new HashMap<String, String>(4);
+//		Calendar cal = new GregorianCalendar();
+//		
+//		if (dayDiff > 0){
+//			cal.setTime(schedDate);
+//			cal.add(Calendar.DATE , -1);
+//			String prevDateStr = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+//			navDates.put("<",prevDateStr);
+//		}
+//		
+//		if (dayDiff > 7){
+//			cal.setTime(schedDate);
+//			cal.add(Calendar.DATE , -7);
+//			String prevWeekDateStr = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+//			navDates.put("<<",prevWeekDateStr);
+//		} else if (dayDiff > 0){
+//			cal.setTime(today);
+//			String prevWeekDateStr = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+//			navDates.put("<<",prevWeekDateStr);
+//		}
+//		
+//		if (dayDiff < (DAYS_AHEAD_TO_SHOW-1)){
+//			cal.setTime(schedDate);
+//			cal.add(Calendar.DATE , 1);
+//			String nextDateStr = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+//			navDates.put(">",nextDateStr);
+//		}
+//		
+//		long daysTillLimit = DAYS_AHEAD_TO_SHOW - dayDiff;
+//		if (daysTillLimit<=7 && daysTillLimit>1){
+//			cal.setTime(today);
+//			cal.add(Calendar.DATE , DAYS_AHEAD_TO_SHOW);
+//			String nextWeekDateStr = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+//			navDates.put(">>",nextWeekDateStr);
+//		} else if (daysTillLimit>7) {
+//			cal.setTime(schedDate);
+//			cal.add(Calendar.DATE , 7);
+//			String nextWeekDateStr = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+//			navDates.put(">>",nextWeekDateStr);
+//		}
+//		
+//		System.out.println("date diff "+dayDiff+" days till limit "+daysTillLimit) ;
+//		
+//		return navDates;
+//	}
 }

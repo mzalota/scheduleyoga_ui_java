@@ -258,16 +258,26 @@ ul {
 text-decoration: none;
 }
 
+/***************  **************/
+.float_center
+{
+margin-left:auto;
+margin-right:auto;
+width:100%;
+text-align:center;
+height: 40px;
+background-color:#999999;
+}
+
 /*************** Calendar Sheet **************/
 .calendar tr {
-	background-color: #EEEEEE;
+	background-color: #999999;
 	max-width: 820px;
 	min-width: 500px;
 	margin: 1px;	
 }
 
 .calendar td {
-	min-width:85px;
 	margin:1px;	 
 }
 
@@ -281,12 +291,19 @@ text-decoration: none;
 
 .cal_time_cell {
 	background-color: #FFD700;
-	min-width: 50px; 
+	min-width: 80px; 
 }
 
 .cal_info_cell {
 	background-color: #EEEEEE;
 	color: #900;
+	min-width:75px;
+}
+
+.cal_info_cell_sunday {
+	color: #900;
+	width: 10px;
+	background-color: #ff9d68;
 }
 
 .cal_studio_name {	
@@ -294,3 +311,17 @@ text-decoration: none;
 	float: right;
 }
 
+div #bckg_image {
+    background-image:  url(/images/next-week2.gif);
+    background-repeat: no-repeat;
+    height: 70px;
+    width: 100%;
+}
+
+div #bckg_image_text {
+    position: relative;
+    height: auto;
+    width: auto;
+    left: 25px;
+    top: 200px;
+}
