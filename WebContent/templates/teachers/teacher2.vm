@@ -6,9 +6,6 @@
 	<meta name="description" content="View schedule for yoga teacher ${instructor.getName()}, ${stateName}"/>
 	
 	<link href="/css/main.css" rel="stylesheet" type="text/css"/>	
-	
-	<style type="text/css">
-	</style>
 
 	#parse("templates/beacons_header.html")
 		
@@ -48,16 +45,34 @@
 					</p>
 					#else
 					<p> According to our records the schedule for Yoga Teacher <strong>${instructor.getName()}</strong>
-						is empty for the week starting on $date.format('EEE, MMM d, yyyy',$schedDate).
+						is empty for the week starting on $dateTool.format('EEE, MMM d, yyyy',$schedDate).
 					</p>	
 					#end
 					     
 					<!-- style="background-color:#999999; 	max-width: 100%; min-width: 10%; height:40px; float:left; margin:1px;  -->
 					<div>
 						<div class="float_center">
+							#if (${thisWeek} == false) 
+								<div style="float:left;">
+								
+								<a href="/teachers/$stateNameUrl/${instructor.getNameForUrl()}/" title="Schedule for ${instructor.getName()} for current week">
+									<div style="width:120px">
+										<div style="margin-top:12px; float: right; ">
+										Current week
+										</div>
+										<div style="float: left">
+										<img src="/images/prev-week2.gif" alt="" />
+										</div>
+										<div style="clear: both"></div>
+									</div>
+								</a>
+								</div>
+							#end
+							
 							<div style="text-align: center; width:85%; float: left; margin-top: 10px">
-							<h2>Yoga Classes</h2>
+								<h2>Yoga Classes</h2>
 							</div>
+							
 							#if (${thisWeek} == true) 
 								<div style="float:right;">
 								
@@ -66,7 +81,7 @@
 										<div style="float: right">
 										<img src="/images/next-week2.gif" alt="" />
 										</div>
-										<div style="margin-top:12px; float: left;">
+										<div style="margin-top:12px; float: left; ">
 										Next week:
 										</div>								
 									<div style="clear: both"></div>
@@ -76,19 +91,7 @@
 							#end
 						<div style="clear: both"></div>
 						</div>
-					</div>
-					<!-- 
-					<div>
-						<div id="bckg_image">
-							<div id="bckg_image_text">
-							<h2>Yoga Classeseeesss 
-							<br />  
-							$date.format('EEE, MMM d, yyyy',$schedDate) 
-							</h2>
-							</div>
-						</div>
-					</div>
-					-->					
+					</div>				
 					<!-- 
 					<div class="float_center">
 							<div id="date_nav" style="float:left; margin-top:5px;">
@@ -98,7 +101,7 @@
 									</a>
 								#end
 							</div>
-							<div style="float:left;"><h2>Yoga Classes <br />  $date.format('EEE, MMM d, yyyy',$schedDate) </h2></div>   
+							<div style="float:left;"><h2>Yoga Classes <br />  $dateTool.format('EEE, MMM d, yyyy',$schedDate) </h2></div>   
 							<div id="date_nav" style="float:left; margin-top:5px;">
 								#if (${navDates.containsKey(">>")}) 
 									<a href="/teachers/$stateNameUrl/${instructor.getNameForUrl()}/next-week.html">
@@ -110,44 +113,18 @@
 					-->
 					<div style="clear:both;"></div>
 					
-					#if (1==2)
-					<ul>
-						#foreach( $startTime in $startTimes)
-							#set($event = $schedule.get($startTime).get(0))
-							<span class="vevent">
-							<li>
-								<div id="menu" style="background-color:#FFD700;width:100px;float:left; margin:1px;">									
-									<span class="carrot">&nbsp;</span>
-									<abbr class="dtstart" title="${date.format('yyyy-MM-dd',$schedDate)}T${date.format('HH:mm:00.000',$startTime)}">$date.format('h:mm a',$startTime)</abbr> 
-								</div>
-								<div id="content" style="background-color:#EEEEEE;width:400px;float:left;margin:1px;">
-									
-									<div class="summary">${event.getComment()}</div>	
-									<div class="location cal_studio_name">
-											Studio: 
-											<a href="/studios/$stateNameUrl/${event.getStudio().getNameForUrl()}/${date.format('yyyy-MM-dd',$event.getStartTime())}.html" title="Schedule for Yoga Studio: ${event.getStudio().getName()}"> 
-											${event.getStudio().getName()}
-											</a>
-									</div>	
-								</div>
-							</li>
-							</span>
-							<div style="clear:both;"> </div>
-						#end
-					</ul>
-					#end
 					<div>
 						<table class="calendar">
 						<tr>
 							<th>Start Time</th>
 							#foreach( $eventDate in $renderer.getFormattedDates($schedDate,7))
-								#if ($date.format('EEE',$eventDate) == "Sun")
+								#if (${dateTool.format('EEE',$eventDate)} == "Sun")
 									<th class="cal_info_cell_sunday" />								
 								#end
 								<th class="cal_info_cell">
-									$date.format('EEE',$eventDate) 
+									${dateTool.format('EEE',$eventDate)} 
 									<br>
-									$date.format('MMM dd',$eventDate)								
+									${dateTool.format('MMM dd',$eventDate)}								
 								</th>
 							#end
 						</tr>
@@ -155,22 +132,22 @@
 							<tr>
 								<td class="cal_time_cell">
 									<span class="carrot_compact">&nbsp;</span>
-									$date.format('h:mm a',$startTime) 
+									${dateTool.format('h:mm a',$startTime)} 
 								</td>
 								#foreach( $eventDate in $renderer.getFormattedDates($schedDate,7))
-									#if ($date.format('EEE',$eventDate) == "Sun")
+									#if (${dateTool.format('EEE',$eventDate)} == "Sun")
 										<td class="cal_info_cell_sunday" />								
 									#end
 									<td  class="cal_info_cell summary">
 									#if ( ${renderer.getEventsDateAndTime($eventDate, $startTime).size()} > 0 )
 										#set( $event = $renderer.getEventsDateAndTime($eventDate, $startTime).get(0))
-										<abbr class="dtstart" title="${date.format('yyyy-MM-dd',$schedDate)}T${date.format('HH:mm:00.000',$startTime)}"/>
+										<abbr class="dtstart" title="${dateTool.format('yyyy-MM-dd',$schedDate)}T${dateTool.format('HH:mm:00.000',$startTime)}"/>
 										
 										<div class="summary">${event.getComment()}</div>	
 										
 										<div class="location cal_studio_name">
 												Studio: 
-												<a href="/studios/$stateNameUrl/${event.getStudio().getNameForUrl()}/${date.format('yyyy-MM-dd',$event.getStartTime())}.html" title="Schedule for Yoga Studio: ${event.getStudio().getName()}"> 
+												<a href="/studios/$stateNameUrl/${event.getStudio().getNameForUrl()}/${dateTool.format('yyyy-MM-dd',$event.getStartTime())}.html" title="Schedule for Yoga Studio: ${event.getStudio().getName()}"> 
 												${event.getStudio().getName()}
 												</a>
 										</div>	

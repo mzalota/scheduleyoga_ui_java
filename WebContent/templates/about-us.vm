@@ -6,19 +6,20 @@
 	<meta name="description" content="Who we are and how we decided to start ScheduleYoga.com"/>
 	
 	<link href="/css/main.css" rel="stylesheet" type="text/css"/>
-	
+	 
 	<style type="text/css">
 	</style>
-	<%@ include file="../templates/beacons_header.html"%>
+	#parse("templates/beacons_header.html")
+	
 </head>
 <body>
 	<div class="wrapper">
-		<%@ include file="../templates/header.html"%>
+		#parse("templates/header.html")
 		<h1>About Us</h1>
 
 		<div class="mainPanel">
 			<div id="left_panel">
-				<%@ include file="../templates/left-panel.html"%>
+				#parse("templates/left-panel.html")
 			</div>
 			
 			<div id="right_panel">	
@@ -65,7 +66,7 @@
 	</div>
 	<div style="clear: both"> </div>
 	<div>	
-		<%@ include file="../templates/footer.html"%>
+		#parse("templates/footer.html")
 	</div>
 </body>
 </html>

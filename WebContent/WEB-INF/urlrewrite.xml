@@ -18,14 +18,14 @@
     </rule>
 
 
-    <rule>
-        <note>
-            The rule means that requests to /test/status/ will be redirected to /rewrite-status
-            the url will be rewritten.
-        </note>
-        <from>/test/status/</from>
-        <to type="redirect">%{context-path}/rewrite-status</to>
-    </rule>
+<!--     <rule> -->
+<!--         <note> -->
+<!--             The rule means that requests to /test/status/ will be redirected to /rewrite-status -->
+<!--             the url will be rewritten. -->
+<!--         </note> -->
+<!--         <from>/test/status/</from> -->
+<!--         <to type="redirect">%{context-path}/rewrite-status</to> -->
+<!--     </rule> -->
     
     <rule>
         <note>
@@ -67,61 +67,62 @@
         <to last="true">/yoga-props/$1</to>
     </rule>
     
-    <rule>
-        <note>
-           	Date page for Teacher
-        </note>
-        <from>/teachers/(.*)/(.*)/(20[\d]{2}-[0,1][\d]-[0,1,2,3][\d]).html</from>
-        <to>/TeacherServlet?state=$1&amp;teacher=$2&amp;date=$3</to>
-    </rule>    
+<!--     <rule> -->
+<!--         <note> -->
+<!--            	Date page for Teachers -->
+<!--         </note> -->
+<!--         <from>/teachers/(.*)</from> -->
+<!--         <to>/schyoga_teachers/$1</to> -->
+<!--     </rule>     -->
     
-    <rule>
-        <note>
-            Teacher's home page
-        </note>
-        <from>/teachers/(.*)/(.*)/</from>
-        <to>/TeacherServlet?state=$1&amp;teacher=$2</to>
-    </rule>
-    
-     <rule>
-        <note>
-            List of teachers in a state
-        </note>
-        <from>/teachers/(.*)/</from>
-        <to>/TeachersListServlet?state=$1</to>
-    </rule>
-    
-    <rule>
-        <note>
-           	Date page for studios
-        </note>
-        <from>/studios/(.*)/(.*)/(20[\d]{2}-[0,1][\d]-[0,1,2,3][\d]).html</from>
-        <to>/StudioServlet?state=$1&amp;studio=$2&amp;date=$3</to>
-    </rule>    
     
 <!--     <rule> -->
 <!--         <note> -->
-<!--            	Studio's pages -->
+<!--            	Date page for Teacher -->
 <!--         </note> -->
-<!--         <from>/(.*)/(.*)/(20[\d]{2}-[0,1][\d]-[0,1,2,3][\d]).html</from> -->
-<!--         <to>/StudioTemplate?state=$1&amp;studio=$2&amp;date=$3</to> -->
+<!--         <from>/teachers/(.*)/(.*)/(20[\d]{2}-[0,1][\d]-[0,1,2,3][\d]).html</from> -->
+<!--         <to>/TeacherServlet?state=$1&amp;teacher=$2&amp;date=$3</to> -->
+<!--     </rule>     -->
+    
+<!--     <rule> -->
+<!--         <note> -->
+<!--             Teacher's home page -->
+<!--         </note> -->
+<!--         <from>/teachers/(.*)/(.*)/</from> -->
+<!--         <to>/TeacherServlet?state=$1&amp;teacher=$2</to> -->
 <!--     </rule> -->
+    
+<!--      <rule> -->
+<!--         <note> -->
+<!--             List of teachers in a state -->
+<!--         </note> -->
+<!--         <from>/teachers/(.*)/</from> -->
+<!--         <to>/TeachersListServlet?state=$1</to> -->
+<!--     </rule> -->
+    
+<!--     <rule> -->
+<!--         <note> -->
+<!--            	Date page for studios -->
+<!--         </note> -->
+<!--         <from>/studios/(.*)/(.*)/(20[\d]{2}-[0,1][\d]-[0,1,2,3][\d]).html</from> -->
+<!--         <to>/StudioServlet?state=$1&amp;studio=$2&amp;date=$3</to> -->
+<!--     </rule>     -->
   
-    <rule>
-        <note>
-            Studio's home page
-        </note>
-        <from>/studios/(.*)/(.*)/</from>
-        <to>/StudioServlet?state=$1&amp;studio=$2</to>
-    </rule>
+<!--     <rule> -->
+<!--         <note> -->
+<!--             Studio's home page -->
+<!--         </note> -->
+<!--         <from>/studios/(.*)/(.*)/</from> -->
+<!--         <to>/StudioServlet?state=$1&amp;studio=$2</to> -->
+<!--     </rule> -->
 
-  	<rule>
-        <note>
-            List of studios in a state
-        </note>
-        <from>/studios/(.*)/</from>
-        <to>/StudiosListServlet?state=$1</to>
-    </rule>
+<!--   	<rule> -->
+<!--         <note> -->
+<!--             List of studios in a state -->
+<!--         </note> -->
+<!--         <from>/studios/(.*)/</from> -->
+<!--         <to>/StudiosListServlet?state=$1</to> -->
+<!--     </rule> -->
 
 
     <outbound-rule>

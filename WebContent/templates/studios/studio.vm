@@ -74,7 +74,7 @@
 									</a>
 								#end
 							</div>
-							<div style="float:left;"><h2>Yoga Classes <br />  $date.format('EEE, MMM d, yyyy',$schedDate) </h2></div>   
+							<div style="float:left;"><h2>Yoga Classes <br />  $dateTool.format('EEE, MMM d, yyyy',$schedDate) </h2></div>   
 							<div id="date_nav" style="float:left; margin-top:5px;">
 								#if (${navDates.containsKey(">")})
 									<a href="/studios/$stateNameUrl/${studioNameUrl}/${navDates.get(">")}.html"
@@ -99,7 +99,7 @@
 								<div id="menu" style="background-color:#FFD700;width:100px;float:left; margin:1px;">									
 									<span class="carrot"&lt;&lt;&nbsp;</span>
 									
-									<abbr class="dtstart" title="${date.format('yyyy-MM-dd',$schedDate)}T${date.format('HH:mm:00.000',$startTime)}">$date.format('h:mm a',$startTime)</abbr> 
+									<abbr class="dtstart" title="${date.format('yyyy-MM-dd',$schedDate)}T${date.format('HH:mm:00.000',$startTime)}">$dateTool.format('h:mm a',$startTime)</abbr> 
 								</div>
 								<div id="content" style="width:408px;float:left;margin:1px 0px 1px 0px;">
 									#foreach( $event in $schedule.get($startTime) )

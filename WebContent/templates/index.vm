@@ -9,33 +9,34 @@
 	
 	<style type="text/css">
 	</style>
-	<%@ include file="../templates/beacons_header.html"%>
+	#parse("templates/beacons_header.html")
 </head>
 <body>
 	<div class="wrapper">
-		<%@ include file="../templates/header.html"%>
+		#parse("templates/header.html")
 		<h1>See Yoga Schedule in Your Area</h1>
-
 
 		<div class="topPanel">
 			<h2>Featured States:</h2>
 			<ul>
 				<li>
-				<span class="carrot">&gt;&nbsp;</span>
+				<span class="carrot">&nbsp;</span>
 				<a href="/studios/new-york/"> New York </a>
 				</li>
 			</ul>
 		</div>
 		<div class="mainPanel">
 			<div id="left_panel">
-				<%@ include file="../templates/left-panel.html"%>
+				#parse("templates/left-panel.html")
 			</div>
 			
 			<div id="right_panel">	
 				<h2> Schedule of Yoga Studios in New York:</h2>
 				<img src="/images/correcting-exersize.jpg" style="float: right; margin: 4px" />
 				<ul>
-					<li><span class="carrot">&gt;&nbsp;</span><a href="/studios/new-york/">New York</a>
+					<li>
+						<span class="carrot">&nbsp;</span>
+						<a href="/studios/new-york/">New York</a>
 					</li>
 				</ul>
 			</div>
@@ -44,7 +45,7 @@
 	</div>
 	<div style="clear: both"> </div>
 	<div>	
-		<%@ include file="../templates/footer.html"%>
+		#parse("templates/footer.html")
 	</div>
 </body>
 </html>

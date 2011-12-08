@@ -8,11 +8,11 @@
 <meta name="description" content="ScheduleYoga.com Privacy Policy" />
 <link href="css/main.css" rel="stylesheet" type="text/css" />
 
-<%@ include file="../templates/beacons_header.html"%>
+#parse("templates/beacons_header.html")
 </head>
 <body>
 	<div class="wrapper">
-		<%@ include file="templates/header.html"%>
+		#parse("templates/header.html")
 		<h1>ScheudleYoga.com Privacy Policy</h1>
 
 		<div class="mainPanel">
@@ -141,7 +141,7 @@
 		</div>
 		<div style="clear: both"></div>
 		<div>
-			<%@ include file="templates/footer.html"%>
+			#parse("templates/footer.html")
 		</div>
 </body>
 </html>
