@@ -2,6 +2,6 @@ User-agent: *
 Disallow: /intranet/
 Disallow: /admin/
 Disallow: /templates/
-Disallow: /WEB_INF/
+Disallow: /WEB-INF/
 Disallow: /META-INF/
 Disallow: /web-console/

@@ -17,6 +17,7 @@ import org.apache.commons.lang.WordUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.Template;
+import org.apache.velocity.app.FieldMethodizer;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
@@ -31,77 +32,66 @@ import com.scheduleyoga.common.GroupList;
 import com.scheduleyoga.dao.DBAccess;
 import com.scheduleyoga.dao.Instructor;
 import com.scheduleyoga.dao.Studio;
+import com.scheduleyoga.dao.Style;
 import com.scheduleyoga.parser.Event;
 import com.scheduleyoga.parser.Helper;
 
 @Controller
-@RequestMapping("/studios")
-public class StudiosController {
+@RequestMapping("/classes")
+public class ClassesController {
 	
     protected final Log logger = LogFactory.getLog(getClass());
     
     EntityDAO entityDAO;
-    
 	public void setEntityDAO(EntityDAO entityDAO) {
 		this.entityDAO = entityDAO;
 	}
 	
     @RequestMapping(value = "*", method = RequestMethod.GET)
     public String otherURLs(ModelMap map) {
-
-    	return "redirect:/studios/new-york/";
+    	return "redirect:/classes/new-york/";
     }  
 	
     @RequestMapping(value = "/{stateNameUrl}/", method = RequestMethod.GET)
-	protected String prepareStudiosListPage(@PathVariable String stateNameUrl, 
+	protected String prepareClassesListPage(@PathVariable String stateNameUrl, 
 											 ModelMap map) {
 
 		if (!stateNameUrl.equals("new-york")){
 			stateNameUrl="new-york";
-			return "redirect:/studios/"+stateNameUrl+"/";
+			return "redirect:/classes/"+stateNameUrl+"/";
 		}
     	
 		String stateName = WordUtils.capitalize(StringUtils.replace(stateNameUrl, "-", " "));
 		
+		List<Style> stylesList = Style.allStyles();		
+		Map<String, Style> styles = new HashMap<String, Style>();
+		
+		for(Style style : stylesList) {
+			styles.put(style.getName(), style);
+		}
+		
 		map.put("stateNameUrl", stateNameUrl);
 		map.put("stateName", stateName);
-		map.put("studios", getStudios());
-		
-		return "/studios/studios_list";
+		map.put("styles", styles);
+		map.put("StyleStatic", new FieldMethodizer("com.scheduleyoga.dao.Style")); //"com.scheduleyoga.dao.Style"
+				
+		return "/classes/classes_list";
 	}
     
-	@SuppressWarnings("unchecked")
-	protected List<Instructor> getStudios(){
-		
-		Session session = DBAccess.openSession();
-		return (List<Instructor>) session.createQuery("from Studio order by name").list();
-	}
-    
-	
-    @RequestMapping(value = "/{stateName}/{studioName}/", method = RequestMethod.GET)
-	protected String prepareStudioPage(@PathVariable String stateName, 
-									   @PathVariable String studioName, 
+    @RequestMapping(value = "/{stateName}/{styleName}/", method = RequestMethod.GET)
+	protected String prepareClassPage(@PathVariable String stateName, 
+									   @PathVariable String styleName, 
 									   ModelMap map) {
-
-		if (!stateName.equals("new-york")){
-			stateName="new-york";
-			return "redirect:/studios/"+stateName+"/"+studioName+"/";
-		}
+		
+    	return processClassPage(stateName,styleName,new Date() ,map);
     	
-		buildStudioPage(map, studioName, stateName, new Date());
-		return "studios/studio";
 	}
     
-    @RequestMapping(value = "/{stateName}/{studioName}/{dateStr}.html", method = RequestMethod.GET)
-	protected String prepareStudioSpecificDatePage(@PathVariable String stateName, 
-												@PathVariable String studioName,
+    @RequestMapping(value = "/{stateName}/{styleName}/{dateStr}.html", method = RequestMethod.GET)
+	protected String prepareClassSpecificDatePage(@PathVariable String stateName, 
+												@PathVariable String styleName,
 												@PathVariable String dateStr,
 												ModelMap map) {
-
-		if (!stateName.equals("new-york")){
-			stateName="new-york";
-			return "redirect:/studios/"+stateName+"/"+studioName+"/"+dateStr+".html";
-		}
     	
 		Date urlDate = new Date();
 		if (!StringUtils.isEmpty(dateStr)){
@@ -112,25 +102,52 @@ public class StudiosController {
 			}
 		}
     	
-		buildStudioPage(map, studioName, stateName, urlDate);
-		return "studios/studio";
+		Date today = new Date();		
+		if (today.after(urlDate)){
+			//The date in the URL is in the past. Redirect to home page for the Class (with today's schedule).
+			return "redirect:/classes/"+stateName+"/"+styleName+"/";
+		}
+    	
+		return processClassPage(stateName, styleName, urlDate, map);
 	}
-    
-	protected void buildStudioPage(ModelMap map, String studioNameUrl, String stateNameUrl, Date schedDate) {
-		List<Event> events = Event.findEventsForStudioForDate(studioNameUrl, schedDate);
 
-		Studio studio = Studio.createFromNameURL(studioNameUrl);
+	/**
+	 * @param stateName
+	 * @param styleName
+	 * @param dateStr
+	 * @param map
+	 * @return
+	 */
+	protected String processClassPage(String stateName, String styleName, Date urlDate, ModelMap map) {
+		
+		if (!stateName.equals("new-york")){
+			stateName="new-york";
+			return "redirect:/classes/"+stateName+"/"+styleName+"/";
+		}
+		
+    	
+		Style style = Style.createNewFromUrl(styleName);
+		if (null == style){
+			return "redirect:/classes/"+stateName+"/"+Style.NAME_BEGINNER.toLowerCase()+"/";
+		}
+		
+		buildClassPage(map, style, stateName, urlDate);
+		return "classes/class";
+	}
+	
+
+
+    
+	protected void buildClassPage(ModelMap map, Style style, String stateNameUrl, Date schedDate) {
+		
+		List<Event> events = Event.findEventsForStyleForDate(style, schedDate);
 		
 		Map<Date, List<Event>> schedule = GroupList.group(events, "startTime");
+		
+		logger.info("found "+events.size()+" events for Styles "+style+" date is "+schedDate);
+		
 		Set<Date> startTimes = new TreeSet<Date>();
 		startTimes.addAll(schedule.keySet());
-		
-		Set<Instructor> instructors = new TreeSet<Instructor>();
-		for(final Event event : events){
-			if (null != event.getInstructor()){
-				instructors.add(event.getInstructor());
-			}
-		}
 			
 		Map<String, String> navDates = initializeNavDates(schedDate);		
 		
@@ -139,13 +156,13 @@ public class StudiosController {
 		map.put("events", events);
 		map.put("startTimes", startTimes);
 		map.put("schedule", schedule);
-		map.put("studioNameUrl", studioNameUrl);
+		map.put("styleNameUrl", style.getNameForUrl());
 		map.put("stateName", stateName);
 		map.put("stateNameUrl", stateNameUrl);
 		map.put("schedDate", schedDate);
 		map.put("navDates", navDates);
-		map.put("studio", studio);
-		map.put("instructors", instructors);
+		map.put("style", style);				
+
 	}
 
 	/**

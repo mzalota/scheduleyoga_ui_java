@@ -6,9 +6,7 @@
 	<meta name="description" content="Who we are and how we decided to start ScheduleYoga.com"/>
 	
 	<link href="/css/main.css" rel="stylesheet" type="text/css"/>
-	 
-	<style type="text/css">
-	</style>
+
 	#parse("templates/beacons_header.html")
 	
 </head>

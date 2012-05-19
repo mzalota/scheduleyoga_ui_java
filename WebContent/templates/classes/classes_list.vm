@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Yoga Classes Schedule in ${stateName}</title>
+	<meta name="description" content="Select a yoga classes in ${stateName} and view schedules"/>
+		
+	<link href="/css/main.css" rel="stylesheet" type="text/css"/>
+	
+	<style type="text/css">
+	</style>
+
+	#parse("templates/beacons_header.html")
+
+</head>
+<body>
+	<div class="wrapper">
+						
+		#parse("templates/header.html")			
+				
+		<div style="margin: 10px 0px">	
+			<h1>Yoga Classes in ${stateName}:</h1>
+		</div>
+			
+		<div class="mainPanel">		
+		<!-- 
+			<div id="left_panel">
+				#parse("templates/left-panel.html")
+			</div>
+		 
+			<div id="right_panel">
+-->				
+				<div style="margin: 10px";></div>
+				<div id="bread">
+					<ul>
+						<li>
+							<a href="/" title="Schedule Yoga"> Schedule Yoga </a>
+							<ul>
+								<li> &raquo; ${stateName}</li> 
+							</ul>
+						</li>
+					</ul>
+				</div>
+				
+				<div>
+					<h2 style="margin-bottom: 10px">View Schedule for Yoga Classes in $stateName:</h2>
+											
+					<img src="/images/doing-yoga-in-health-club.jpg" style="float: right; margin: 4px" />
+				
+				
+				    <h3>View classes by Level of Difficulty</h3>
+				    <ul>
+				      
+				      <li><span class="carrot">1 </span>
+			    			<a href="/classes/${stateNameUrl}/${styles[$StyleStatic.NAME_BEGINNER].getNameForUrl()}/"
+			    			title="Today's schedule for $StyleStatic.NAME_BEGINNER yoga classes in $stateName">
+			    			$StyleStatic.NAME_BEGINNER</a>
+					  </li>
+					  <li><span class="carrot">2 </span>
+			    			<a href="/classes/${stateNameUrl}/${styles[$StyleStatic.NAME_INTERMEDIATE].getNameForUrl()}/"
+			    			title="Today's schedule for $StyleStatic.NAME_INTERMEDIATE yoga classes in $stateName">
+			    			$StyleStatic.NAME_INTERMEDIATE</a>
+					  </li>
+					  <li><span class="carrot">3 </span>
+			    			<a href="/classes/${stateNameUrl}/${styles[$StyleStatic.NAME_ADVANCED].getNameForUrl()}/"
+			    			title="Today's schedule for $StyleStatic.NAME_ADVANCED yoga classes in $stateName">
+			    			$StyleStatic.NAME_ADVANCED</a>
+					  </li>
+				    </ul> 
+					
+				    <h3>View classes by Yoga Styles</h3>
+					<ul>
+						#set($counter = 1)
+						#foreach( $style in $styles )
+			    			
+							#if($style.getName()==$StyleStatic.NAME_BEGINNER || 
+							    $style.getName()==$StyleStatic.NAME_INTERMEDIATE || 
+							    $style.getName()==$StyleStatic.NAME_ADVANCED ||
+							    $style.getName()==$StyleStatic.NAME_PRENATAL ||
+							    $style.getName()==$StyleStatic.NAME_BABY ||
+							    $style.getName()==$StyleStatic.NAME_KIDS ||
+							    $style.getName()==$StyleStatic.NAME_MEDITATION ||
+							    $style.getName()==$StyleStatic.NAME_PRANAYAMA)
+							#else
+			    			<li><span class="carrot">$counter </span>
+			    				<a href="/classes/${stateNameUrl}/${style.getNameForUrl()}/"
+			    				title="Today's schedule for ${style.getName()} yoga classes in $stateName">
+			    				${style.getName()}</a>
+							</li>		
+								#if($counter%10 == 0)
+									</ul><div stule="margin: 7px"></div><ul>
+								#end
+								#set($counter = $counter + 1)							
+							#end					
+							
+						#end
+					</ul>
+								
+					<h3>View Targeted Yoga classes</h3>
+					 <ul>				      
+				      <li><span class="carrot">1 </span>
+			    			<a href="/classes/${stateNameUrl}/${styles[$StyleStatic.NAME_PRENATAL].getNameForUrl()}/" 
+			    			   title="Today's schedule for $StyleStatic.NAME_PRENATAL yoga classes in $stateName">
+			    			$StyleStatic.NAME_PRENATAL</a>
+					  </li>
+				      <li><span class="carrot">2 </span>
+			    			<a href="/classes/${stateNameUrl}/${styles[$StyleStatic.NAME_BABY].getNameForUrl()}/"
+			    			title="Today's schedule for Baby and Mom yoga classes in $stateName">
+			    			Baby and Mom</a>
+					  </li>
+					   <li><span class="carrot">3 </span>
+			    			<a href="/classes/${stateNameUrl}/${styles[$StyleStatic.NAME_KIDS].getNameForUrl()}/"
+			    			title="Today's schedule for $StyleStatic.NAME_KIDS yoga classes in $stateName">
+			    			$StyleStatic.NAME_KIDS</a>
+					  </li>
+					   <li><span class="carrot">4 </span>
+			    			<a href="/classes/${stateNameUrl}/${styles[$StyleStatic.NAME_MEDITATION].getNameForUrl()}/"
+			    			title="Today's schedule for $StyleStatic.NAME_MEDITATION yoga classes in $stateName">
+			    			$StyleStatic.NAME_MEDITATION</a>
+					  </li>
+					  <li><span class="carrot">5 </span>
+			    			<a href="/classes/${stateNameUrl}/${styles[$StyleStatic.NAME_PRANAYAMA].getNameForUrl()}/"
+			    			title="Today's schedule for $StyleStatic.NAME_PRANAYAMA yoga classes in $stateName">
+			    			$StyleStatic.NAME_PRANAYAMA</a>
+					  </li>
+				     </ul>
+				</div>				
+<!--			</div>			
+			<div style="clear: both"></div>
+-->				
+		</div>			
+	</div> 
+	
+	<!-- end of wrapper  --> 	
+	<div style="clear: both"></div>
+	<div>	
+		#parse("templates/footer.html")
+	</div>
+</body>
+</html>

@@ -39,7 +39,7 @@ public class DisplayTable extends HttpServlet {
 	    PrintWriter out = response.getWriter();
 	    out.println("<html>");
 	    out.println("<body>");
-	    out.println("<h1>Maximka ParserUI 293</h1>");
+	    out.println("<h1>Maximka ParserUI 319  </h1>");
 	    
 	    //String studioName = Parser.STUDIO_BABTISTE;
 	    //String studioName = Parser.STUDIO_OM_YOGA;

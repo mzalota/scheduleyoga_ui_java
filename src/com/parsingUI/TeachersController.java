@@ -81,6 +81,11 @@ public class TeachersController {
 	protected String prepareTeachersListPage(@PathVariable String stateNameUrl, 
 											 ModelMap map) {
 
+		if (!stateNameUrl.equals("new-york")){
+			stateNameUrl="new-york";
+			return "redirect:/teachers/"+stateNameUrl+"/";
+		}
+    	
 		String stateName = WordUtils.capitalize(StringUtils.replace(stateNameUrl, "-", " "));
 		
 		map.put("stateNameUrl", stateNameUrl);
@@ -89,6 +94,7 @@ public class TeachersController {
 		
 		return "/teachers/teachers_list";
 	}
+    
     
 	@SuppressWarnings("unchecked")
 	protected List<Instructor> getAllInstructors(){
@@ -101,6 +107,11 @@ public class TeachersController {
     @RequestMapping(value = "/{stateName}/{instructorName}/", method = RequestMethod.GET)
 	protected String prepareTeacherPage(@PathVariable String stateName, @PathVariable String instructorName, ModelMap map) {
 
+		if (!stateName.equals("new-york")){
+			stateName="new-york";
+			return "redirect:/teachers/"+stateName+"/"+instructorName+"/";
+		}
+    	
 		buildMap(map, instructorName, stateName, true);
 		return "/teachers/teacher2";
 	}
@@ -119,6 +130,11 @@ public class TeachersController {
 												@PathVariable String instructorName,
 												ModelMap map) {
 
+		if (!stateName.equals("new-york")){
+			stateName="new-york";
+			return "redirect:/teachers/"+stateName+"/"+instructorName+"/next-week.html";
+		}
+    	
 		buildMap(map, instructorName, stateName, false);
 		return "/teachers/teacher2";
 	}

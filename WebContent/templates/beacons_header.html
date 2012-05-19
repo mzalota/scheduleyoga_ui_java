@@ -1,16 +1,44 @@
 <!-- Google Analytics code START here -->
 <script type="text/javascript">
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-6541552-4']);
-  _gaq.push(['_trackPageview']);
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-6541552-4']);
+_gaq.push(['_trackPageview']);
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+
+function beaconToGoogleAnalytics(eventName){	
+	alert("the value of _gaq "+_gaq);
+  	if (typeof(eventName)!='undefined'){
+	  	alert("the value of eventName in beaconToGoogleAnalytics is "+eventName);
+  		_gaq.push(['_trackEvent', eventName]);
+  	}
+
+}
 
 </script>
 
 <!-- Google Analytics code END here -->
+<!--
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript">
+function afterReady30secs(){
+	alert("Max is here in alert afterReady30secs BEFORE");
+	beaconToGoogleAnalytics("30SecsOnPage");
+	alert("Max is here in alert afterReady30secs AFTER");
+	
+}
+
+jQuery(document).ready(function(){
+		var gaTag = _gaq;
+		gaTag.push(['_trackEvent', '30SecsOnPaggg']); 
+		alert('just sent to GA');
+		setTimeout(function(){alert('just an alert');},5000);
+		//setTimeout("afterReady30secs()",5000);
+	});
+</script>
+ -->

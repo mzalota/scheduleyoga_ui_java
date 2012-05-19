@@ -2,6 +2,11 @@ body {
 	background-color: #867F75;
     background-position: center center;
     font-family: Verdana,Arial,sans-serif;
+    border: 0;
+}
+
+img {
+	border: 0;
 }
 
 a:link {
@@ -156,42 +161,34 @@ ul {
 
 /*************** Navigation **************/
 
-
 #nav {    
     background-color: #CAD6A8;
-    float: left;
     height: 36px;
-    margin: 0;
-    width: 728px;
-}
-#nav p {
-    margin: 20px 0 0 20px;
-    padding: 0 0 0 20px;
-    color: #BF5820;
-    font-family: Verdana;
-    font-size: 16px;
-    font-weight: bold !important;
+    margin-left: 105px;
+   	padding: 5px 1em 3px 1em;
 }
 
-#nav a:link {
-	margin: 20px 0 0 20px;
+#nav a {
+    float: left;
     text-decoration: none;
+    margin: 5px 2px 2px 2px;
 }
-#nav a:visited {
-	margin: 20px 0 0 20px;
-    text-decoration: none;
-}
+
 #nav a:hover {
     color: #BF5820;
-    text-decoration: none; 
 }
-#nav a:active {
-    text-decoration: none;
+.navsplit {
+	float: left;
+	margin: 5px 12px 2px 12px;
 }
-#nav a.topnavselected {
-    color: #BF5820;
-    text-decoration: none;
-}
+
+#beta-notice{
+	position: absolute;
+	top: 3px;
+	right: 1px;
+	width: 5em;
+	text-align: right;
+}	
 
 /*************** Left Panel **************/
 
@@ -253,12 +250,40 @@ ul {
     text-decoration: underline;
 }
 
-/***************  **************/
-#date_nav a {
-text-decoration: none;
+/*************** Date Navigation **************/
+
+#dates_nav {
+	background-color:#999999; 
+	width: 100%; 
+	height:40px; 
+	float:left; 
+	margin:1px;
+	position: relative;
+}
+#dates_nav_left {
+	position: absolute; 
+	top:7px; 
+	left: 5px
 }
 
-/***************  **************/
+#dates_nav_right {
+	position: absolute; 
+	top:7px; 
+	right: 5px
+}
+
+#dates_nav a {
+ 	text-decoration: none;
+ 	margin-top: 3px;
+}
+
+#dates_nav h2 {
+	text-align: center;
+	margin-top: 3px;
+}
+
+
+/*************** Right Pane **************/
 .float_center
 {
 margin-left:auto;
@@ -291,7 +316,7 @@ background-color:#999999;
 
 .cal_time_cell {
 	background-color: #FFD700;
-	min-width: 80px; 
+	width: 90px; 
 }
 
 .cal_info_cell {

@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head profile="http://microformats.org/profile/hcalendar">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Schedule for ${style.getName()} Yoga Classes in ${stateName}</title>
+	<meta name="description" content="View schedule for yoga class ${style.getName()}, ${stateName}"/>
+	
+	<link href="/css/reset.css" rel="stylesheet" type="text/css"/>
+	<link href="/css/main.css" rel="stylesheet" type="text/css"/>
+
+	#parse("templates/beacons_header.html")
+
+</head>
+<body>
+	<div class="wrapper">
+	
+		#parse("templates/header.html")
+		
+		<div style="margin: 10px 0px">
+			<h1>Schedule for ${style.getName()} Yoga Classes: </h1>
+		</div>
+		
+		<div class="mainPanel">		
+			<div id="">
+				<div style="margin: 10px";></div>
+
+				<div id="bread">
+					<ul>
+						<li>
+							<a href="/"> Schedule Yoga </a>
+							<ul>
+								<li> &raquo; <a style="text-decoration: underline;" href="/classes/${stateNameUrl}/"> ${stateName}</a>
+									<ul> 
+										<li>&raquo; <a style="text-decoration: underline;" href="/classes/${stateNameUrl}/${styleNameUrl}/"> ${style.getName()} Yoga</a> </li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+
+				<div>					
+					<p> The schedule for <a rel="nofollow" href="${style.getNameForUrl()}" title="${style.getName()} classes" target="_blank">${style.getName()} Yoga Classes</a> in ${stateName}  
+					 
+					</p>     
+					
+					<div id="dates_nav">
+							<div id="dates_nav_left">
+								#if (${navDates.containsKey("<<")})
+									#set( $prevWeek = $navDates.get("<<"))
+									<a href="/classes/${stateNameUrl}/${styleNameUrl}/${navDates.get("<<")}.html"
+									title="${navDates.get("<<")} Schedule for Yoga Class ${style.getName()}, ${stateName}">
+										<img src="/images/prev-week.gif"/>
+									</a>
+								#end
+								#if (${navDates.containsKey("<")})
+									<a href="/classes/${stateNameUrl}/${styleNameUrl}/${navDates.get("<")}.html"
+									title="${navDates.get("<")} Schedule for Yoga Class ${style.getName()}, ${stateName}">
+										<img src="/images/prev-date.gif"/>
+									</a>
+								#end
+							</div>
+							
+							<h2>Yoga Classes 
+							<span style="display: block;"> $dateTool.format('EEE, MMM d, yyyy',$schedDate)</span> </h2>
+							   
+							<div id="dates_nav_right">
+								#if (${navDates.containsKey(">")})
+									<a href="/classes/$stateNameUrl/${styleNameUrl}/${navDates.get(">")}.html"
+									title="${navDates.get(">")} Schedule for Yoga Class ${style.getName()}, ${stateName}">
+										<img src="/images/next-date.gif"/>
+									</a>
+								#end
+								#if (${navDates.containsKey(">>")}) 
+									<a href="/classes/$stateNameUrl/${styleNameUrl}/${navDates.get(">>")}.html"
+									title="${navDates.get(">>")} Schedule for Yoga Class ${style.getName()}, ${stateName}">
+										<img src="/images/next-week.gif"/>
+									</a>
+								#end
+							</div>
+					</div>
+					
+					<div style="width: 100%;">
+					<ul>
+						#foreach( $startTime in $startTimes)
+							<span class="vevent">
+							<li>
+								<div id="menu" style="background-color:#FFD700;width:100px;float:left; margin:1px;">									
+									<span class="carrot">&nbsp;</span>
+									<span class="dtstart">
+										$dateTool.format('h:mm a',$startTime) <span class="value-title" title="${dateTool.format('yyyy-MM-dd',$schedDate)}T${dateTool.format('HH:mm',$startTime)}"></span>
+									</span>																		
+								</div>
+								<div id="content" style="width:612px;float:left;margin:1px 0px 1px 0px;">
+									#foreach( $event in $schedule.get($startTime) )
+										<div id="content vevent" style="background-color:#EEEEEE;width:200px;float:left;margin:0px 1px 0px 1px;">											
+											
+											<div class="cal_studio_name">												
+												<span class="summary">${event.getClassName()}</span>													
+												<a href="/studios/$stateNameUrl/${event.getStudio().getNameForUrl()}/${dateTool.format('yyyy-MM-dd',$event.getStartTime())}.html" title="Schedule for Yoga Studio: ${event.getStudio().getName()}"> 
+													<span class="location fn org">(${event.getStudio().getName()})
+														<span class="url"><span class="value-title" title="http://www.scheduleyoga.com/studios/$stateNameUrl/${event.getStudio().getNameForUrl()}/"></span></span>
+													</span>
+												</a>
+											</div>
+											
+											<div style="float: right; color: #000000;"></div>											
+										</div>
+									#end
+								</div>
+							</li>
+							</span>
+							<div style="clear:both;"> </div>
+						#end
+					</ul>
+					</div>
+				</div>
+				#if (${instructors.size()}>0) 
+					<p> Links below will take you to complete schedule for yoga teachers in <strong>${studio.getName()}</strong> yoga studio:   
+						<ul>
+						#foreach( $instructor in $instructors )
+							<li>
+								<span class="carrot">&nbsp;</span> <a href="/teachers/${stateNameUrl}/${instructor.getNameForUrl()}/" title="Schedule for Yoga Teacher: ${instructor.getName()}, ${stateName}"> ${instructor.getName()}</a>
+							</li>					
+						#end
+						</ul>
+					</p>
+					#end
+			</div>
+			<div style="clear: both"></div>
+		</div>		
+	</div>
+	<div style="clear: both"></div>
+	<div>	
+		#parse("templates/footer.html")
+	</div>
+	
+</body>
+</html>

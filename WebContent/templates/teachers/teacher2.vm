@@ -5,7 +5,8 @@
 	<title>Schedule for Yoga Teacher: ${instructor.getName()}, ${stateName}</title>
 	<meta name="description" content="View schedule for yoga teacher ${instructor.getName()}, ${stateName}"/>
 	
-	<link href="/css/main.css" rel="stylesheet" type="text/css"/>	
+	<!-- <link href="/css/reset.css" rel="stylesheet" type="text/css"/> -->
+	<link href="/css/main.css" rel="stylesheet" type="text/css"/>		
 
 	#parse("templates/beacons_header.html")
 		
@@ -49,68 +50,41 @@
 					</p>	
 					#end
 					     
-					<!-- style="background-color:#999999; 	max-width: 100%; min-width: 10%; height:40px; float:left; margin:1px;  -->
+					<!--class="float_center"  style="background-color:#999999; 	max-width: 100%; min-width: 10%; height:40px; float:left; margin:1px;  -->
 					<div>
-						<div class="float_center">
+						<div id="dates_nav">
 							#if (${thisWeek} == false) 
-								<div style="float:left;">
-								
-								<a href="/teachers/$stateNameUrl/${instructor.getNameForUrl()}/" title="Schedule for ${instructor.getName()} for current week">
-									<div style="width:120px">
-										<div style="margin-top:12px; float: right; ">
-										Current week
-										</div>
-										<div style="float: left">
-										<img src="/images/prev-week2.gif" alt="" />
-										</div>
-										<div style="clear: both"></div>
-									</div>
-								</a>
+							<div id="dates_nav_left" style="top: 0px;">
+								<div style="float: left">
+									<a href="/teachers/$stateNameUrl/${instructor.getNameForUrl()}/" title="Schedule for ${instructor.getName()} for current week">
+										<img src="/images/prev-week2.gif" alt="Schedule for ${instructor.getName()} for current week" />
+									</a>
 								</div>
+								<a style="margin-top:12px; margin-left: 5px; float: left; " href="/teachers/$stateNameUrl/${instructor.getNameForUrl()}/" title="Schedule for ${instructor.getName()} for current week">
+									Current week
+								</a>
+							</div>
 							#end
 							
-							<div style="text-align: center; width:85%; float: left; margin-top: 10px">
-								<h2>Yoga Classes</h2>
-							</div>
+							<h2	style="margin-top: 10px">Yoga Classes</h2>
 							
 							#if (${thisWeek} == true) 
-								<div style="float:right;">
+							<div id="dates_nav_right" style="top: 0px;">
 								
-								<a href="/teachers/$stateNameUrl/${instructor.getNameForUrl()}/next-week.html" title="Schedule for ${instructor.getName()} for next week">
-									<div style="width:120px">
-										<div style="float: right">
-										<img src="/images/next-week2.gif" alt="" />
-										</div>
-										<div style="margin-top:12px; float: left; ">
-										Next week:
-										</div>								
-									<div style="clear: both"></div>
-									</div>
-								</a>
+								<div style="float: right">
+									<a href="/teachers/$stateNameUrl/${instructor.getNameForUrl()}/next-week.html" title="Schedule for ${instructor.getName()} for next week">
+										<img src="/images/next-week2.gif" alt="Schedule for ${instructor.getName()} for next week" title="Schedule for ${instructor.getName()} for next week"/>
+									</a>
 								</div>
+								<a style="margin-top:12px;  margin-right: 5px; text-align: right; float: right;" href="/teachers/$stateNameUrl/${instructor.getNameForUrl()}/next-week.html" title="Schedule for ${instructor.getName()} for next week">
+									Next week
+								</a>
+							</div>
 							#end
 						<div style="clear: both"></div>
 						</div>
 					</div>				
-					<!-- 
-					<div class="float_center">
-							<div id="date_nav" style="float:left; margin-top:5px;">
-								#if (${navDates.containsKey("<<")})
-									<a href="/teachers/${stateNameUrl}/${instructor.getNameForUrl()}/${navDates.get("<<")}.html"> 
-									<img src="/images/prev-week.gif"/>
-									</a>
-								#end
-							</div>
-							<div style="float:left;"><h2>Yoga Classes <br />  $dateTool.format('EEE, MMM d, yyyy',$schedDate) </h2></div>   
-							<div id="date_nav" style="float:left; margin-top:5px;">
-								#if (${navDates.containsKey(">>")}) 
-									<a href="/teachers/$stateNameUrl/${instructor.getNameForUrl()}/next-week.html">
-									<img src="/images/next-week2.gif"/>
-									</a>
-								#end
-							</div>
-					</div>
-					-->
+
 					<div style="clear:both;"></div>
 					
 					<div>
@@ -131,7 +105,7 @@
 						#foreach($startTime in $renderer.getAllDistinctTimes())
 							<tr>
 								<td class="cal_time_cell">
-									<span class="carrot_compact">&nbsp;</span>
+									<span class="carrot_compact"> &nbsp;</span>
 									${dateTool.format('h:mm a',$startTime)} 
 								</td>
 								#foreach( $eventDate in $renderer.getFormattedDates($schedDate,7))
