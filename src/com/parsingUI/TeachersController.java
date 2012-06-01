@@ -15,6 +15,7 @@ import org.apache.velocity.Template;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.scheduleyoga.common.GroupList;
+import com.scheduleyoga.common.LookUp;
 import com.scheduleyoga.dao.DBAccess;
 import com.scheduleyoga.dao.Instructor;
 import com.scheduleyoga.dao.Studio;
@@ -81,38 +83,74 @@ public class TeachersController {
 	protected String prepareTeachersListPage(@PathVariable String stateNameUrl, 
 											 ModelMap map) {
 
-		if (!stateNameUrl.equals("new-york")){
-			stateNameUrl="new-york";
+    	Map<String, String> stateURLs = LookUp.getInstance().getStatesMap();    	
+    	if(!stateURLs.containsKey(stateNameUrl.toLowerCase().trim())){
+    		//specified state is invalid. Redirect to new-york
+    		stateNameUrl="new-york";
 			return "redirect:/teachers/"+stateNameUrl+"/";
-		}
+    	}
+    	
+    	if (!stateNameUrl.trim().toLowerCase().equals(stateNameUrl)){
+    		//stateNameUrl has capitalized letters.
+    		return "redirect:/teachers/"+stateNameUrl.trim().toLowerCase()+"/";
+    	}        	
     	
 		String stateName = WordUtils.capitalize(StringUtils.replace(stateNameUrl, "-", " "));
 		
 		map.put("stateNameUrl", stateNameUrl);
 		map.put("stateName", stateName);
-		map.put("instructors", getAllInstructors());
+		map.put("instructors", getAllInstructors(stateNameUrl));
 		
 		return "/teachers/teachers_list";
 	}
     
     
 	@SuppressWarnings("unchecked")
-	protected List<Instructor> getAllInstructors(){
+	protected List<Instructor> getAllInstructors(String stateNameUrl){
 		
-		Session session = DBAccess.openSession();
-		return (List<Instructor>) session.createQuery("from Instructor order by name").list();
+		//Session session = DBAccess.openSession();
+		//return (List<Instructor>) session.createQuery("from Instructor order by name").list();		
+		
+		Query q = DBAccess.openSession().createQuery(
+				"SELECT ev.instructor " +
+				"FROM Event AS ev " +
+				"JOIN ev.instructor AS instr " +
+				"JOIN ev.studio AS std " +
+				"WHERE std.state = :stateNameUrl " +
+				"GROUP BY ev.instructor  " +
+				"ORDER BY instr.name "				
+				);
+		q.setParameter("stateNameUrl", stateNameUrl);
+		
+		List<Instructor> results = (List<Instructor>) q.list();
+		if (results.size() <= 0) {
+			return null;
+		}	
+		return results;
+		
 	}
     
-    
-    @RequestMapping(value = "/{stateName}/{instructorName}/", method = RequestMethod.GET)
-	protected String prepareTeacherPage(@PathVariable String stateName, @PathVariable String instructorName, ModelMap map) {
-
-		if (!stateName.equals("new-york")){
-			stateName="new-york";
-			return "redirect:/teachers/"+stateName+"/"+instructorName+"/";
-		}
+    @RequestMapping(value = "/{stateNameUrl}/{instructorName}/", method = RequestMethod.GET)
+	protected String prepareTeacherPage(@PathVariable String stateNameUrl, @PathVariable String instructorName, ModelMap map) {
     	
-		buildMap(map, instructorName, stateName, true);
+    	Map<String, String> stateURLs = LookUp.getInstance().getStatesMap();    	
+    	if(!stateURLs.containsKey(stateNameUrl.toLowerCase().trim())){
+    		//specified state is invalid. Redirect to new-york
+    		stateNameUrl="new-york";
+			return "redirect:/teachers/"+stateNameUrl+"/"+instructorName.trim().toLowerCase()+"/";
+    	}
+    	
+    	if (!stateNameUrl.trim().toLowerCase().equals(stateNameUrl)){
+    		//stateNameUrl has capitalized letters.
+    		return "redirect:/teachers/"+stateNameUrl.trim().toLowerCase()+"/"+instructorName.trim().toLowerCase()+"/";
+    	}      
+    	
+    	if (!instructorName.trim().toLowerCase().equals(instructorName)){
+    		//instructorName has capitalized letters.
+    		return "redirect:/teachers/"+stateNameUrl.trim().toLowerCase()+"/"+instructorName.trim().toLowerCase()+"/";
+    	}      
+    	    	
+		buildMap(map, instructorName, stateNameUrl, true);
 		return "/teachers/teacher2";
 	}
 
@@ -121,21 +159,34 @@ public class TeachersController {
 										@PathVariable String instructorName,
 										@PathVariable String reqDate,
 										ModelMap map) {
-
+    	
+    	//We are no longer showing schedules for instructors by day. Its always by week.
 		return "redirect:/teachers/"+stateName+"/"+instructorName+"/";
 	}
     
-    @RequestMapping(value = "/{stateName}/{instructorName}/next-week.html", method = RequestMethod.GET)
-	protected String prepareTeacherNextWeekPage(@PathVariable String stateName, 
+    @RequestMapping(value = "/{stateNameUrl}/{instructorName}/next-week.html", method = RequestMethod.GET)
+	protected String prepareTeacherNextWeekPage(@PathVariable String stateNameUrl, 
 												@PathVariable String instructorName,
 												ModelMap map) {
 
-		if (!stateName.equals("new-york")){
-			stateName="new-york";
-			return "redirect:/teachers/"+stateName+"/"+instructorName+"/next-week.html";
-		}
+    	Map<String, String> stateURLs = LookUp.getInstance().getStatesMap();    	
+    	if(!stateURLs.containsKey(stateNameUrl.toLowerCase().trim())){
+    		//specified state is invalid. Redirect to new-york
+    		stateNameUrl="new-york";
+			return "redirect:/teachers/"+stateNameUrl+"/"+instructorName.trim().toLowerCase()+"/next-week.html";
+    	}
     	
-		buildMap(map, instructorName, stateName, false);
+    	if (!stateNameUrl.trim().toLowerCase().equals(stateNameUrl)){
+    		//stateNameUrl has capitalized letters.
+    		return "redirect:/teachers/"+stateNameUrl.trim().toLowerCase()+"/"+instructorName.trim().toLowerCase()+"/next-week.html";
+    	}      
+    	
+    	if (!instructorName.trim().toLowerCase().equals(instructorName)){
+    		//instructorName has capitalized letters.
+    		return "redirect:/teachers/"+stateNameUrl.trim().toLowerCase()+"/"+instructorName.trim().toLowerCase()+"/next-week.html";
+    	}          	
+    	
+		buildMap(map, instructorName, stateNameUrl, false);
 		return "/teachers/teacher2";
 	}
     

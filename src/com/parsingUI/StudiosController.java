@@ -20,6 +20,7 @@ import org.apache.velocity.Template;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.exception.ParseErrorException;
 import org.apache.velocity.exception.ResourceNotFoundException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.scheduleyoga.common.GroupList;
+import com.scheduleyoga.common.LookUp;
 import com.scheduleyoga.dao.DBAccess;
 import com.scheduleyoga.dao.Instructor;
 import com.scheduleyoga.dao.Studio;
@@ -56,52 +58,94 @@ public class StudiosController {
 	protected String prepareStudiosListPage(@PathVariable String stateNameUrl, 
 											 ModelMap map) {
 
-		if (!stateNameUrl.equals("new-york")){
-			stateNameUrl="new-york";
+    	Map<String, String> stateURLs = LookUp.getInstance().getStatesMap();    	
+    	if(!stateURLs.containsKey(stateNameUrl.toLowerCase().trim())){
+    		//specified state is invalid. Redirect to new-york
+    		stateNameUrl="new-york";
 			return "redirect:/studios/"+stateNameUrl+"/";
-		}
+    	}
+    	
+    	if (!stateNameUrl.trim().toLowerCase().equals(stateNameUrl)){
+    		//stateNameUrl has capitalized letters.
+    		return "redirect:/studios/"+stateNameUrl.trim().toLowerCase()+"/";
+    	}
     	
 		String stateName = WordUtils.capitalize(StringUtils.replace(stateNameUrl, "-", " "));
 		
 		map.put("stateNameUrl", stateNameUrl);
 		map.put("stateName", stateName);
-		map.put("studios", getStudios());
+		map.put("studios", getStudios(stateNameUrl));
 		
 		return "/studios/studios_list";
 	}
     
 	@SuppressWarnings("unchecked")
-	protected List<Instructor> getStudios(){
+	protected List<Studio> getStudios(String stateNameUrl){				
 		
-		Session session = DBAccess.openSession();
-		return (List<Instructor>) session.createQuery("from Studio order by name").list();
+		//Session session = DBAccess.openSession();
+		//return (List<Instructor>) session.createQuery("from Studio order by name").list();		
+		
+		Query q = DBAccess.openSession().createQuery(
+				"from Studio where state=:stateNameUrl order by name"
+				);
+		q.setParameter("stateNameUrl", stateNameUrl);
+		
+		List<Studio> results = (List<Studio>) q.list();
+		if (results.size() <= 0) {
+			return null;
+		}	
+		return results;
 	}
     
 	
-    @RequestMapping(value = "/{stateName}/{studioName}/", method = RequestMethod.GET)
-	protected String prepareStudioPage(@PathVariable String stateName, 
+    @RequestMapping(value = "/{stateNameUrl}/{studioName}/", method = RequestMethod.GET)
+	protected String prepareStudioPage(@PathVariable String stateNameUrl, 
 									   @PathVariable String studioName, 
 									   ModelMap map) {
 
-		if (!stateName.equals("new-york")){
-			stateName="new-york";
-			return "redirect:/studios/"+stateName+"/"+studioName+"/";
-		}
+    	Map<String, String> stateURLs = LookUp.getInstance().getStatesMap();    	
+    	if(!stateURLs.containsKey(stateNameUrl.toLowerCase().trim())){
+    		//specified state is invalid. Redirect to new-york
+    		stateNameUrl="new-york";
+			return "redirect:/studios/"+stateNameUrl+"/"+studioName.trim().toLowerCase()+"/";
+    	}
     	
-		buildStudioPage(map, studioName, stateName, new Date());
+    	if (!stateNameUrl.trim().toLowerCase().equals(stateNameUrl)){
+    		//stateNameUrl has capitalized letters.
+    		return "redirect:/studios/"+stateNameUrl.trim().toLowerCase()+"/"+studioName.trim().toLowerCase()+"/";
+    	}
+    	
+    	if (!studioName.trim().toLowerCase().equals(studioName)){
+    		//studioName has capitalized letters.
+    		return "redirect:/studios/"+stateNameUrl+"/"+studioName.trim().toLowerCase()+"/";
+    	}
+    	
+		buildStudioPage(map, studioName, stateNameUrl, new Date());
 		return "studios/studio";
 	}
     
-    @RequestMapping(value = "/{stateName}/{studioName}/{dateStr}.html", method = RequestMethod.GET)
-	protected String prepareStudioSpecificDatePage(@PathVariable String stateName, 
+    @RequestMapping(value = "/{stateNameUrl}/{studioName}/{dateStr}.html", method = RequestMethod.GET)
+	protected String prepareStudioSpecificDatePage(@PathVariable String stateNameUrl, 
 												@PathVariable String studioName,
 												@PathVariable String dateStr,
 												ModelMap map) {
 
-		if (!stateName.equals("new-york")){
-			stateName="new-york";
-			return "redirect:/studios/"+stateName+"/"+studioName+"/"+dateStr+".html";
-		}
+    	Map<String, String> stateURLs = LookUp.getInstance().getStatesMap();    	
+    	if(!stateURLs.containsKey(stateNameUrl.toLowerCase().trim())){
+    		//specified state is invalid. Redirect to new-york
+    		stateNameUrl="new-york";
+			return "redirect:/studios/"+stateNameUrl+"/"+studioName.trim().toLowerCase()+"/"+dateStr+".html";
+    	}
+    	
+    	if (!stateNameUrl.trim().toLowerCase().equals(stateNameUrl)){
+    		//stateNameUrl has capitalized letters.
+    		return "redirect:/studios/"+stateNameUrl.trim().toLowerCase()+"/"+studioName.trim().toLowerCase()+"/"+dateStr+".html";
+    	}    	
+    	
+    	if (!studioName.trim().toLowerCase().equals(studioName)){
+    		//studioName has capitalized letters.
+    		return "redirect:/studios/"+stateNameUrl+"/"+studioName.trim().toLowerCase()+"/"+dateStr+".html";
+    	}
     	
 		Date urlDate = new Date();
 		if (!StringUtils.isEmpty(dateStr)){
@@ -112,7 +156,7 @@ public class StudiosController {
 			}
 		}
     	
-		buildStudioPage(map, studioName, stateName, urlDate);
+		buildStudioPage(map, studioName, stateNameUrl, urlDate);
 		return "studios/studio";
 	}
     

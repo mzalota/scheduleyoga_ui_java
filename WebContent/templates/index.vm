@@ -26,17 +26,53 @@
 			</ul>
 		</div>
 		<div class="mainPanel">
-			<div id="left_panel">
-				#parse("templates/left-panel.html")
-			</div>
 			
-			<div id="right_panel">	
-				<h2> Schedule of Yoga Studios in New York:</h2>
+			
+			<div id=""> <!-- right_panel -->	
+				<h2> Schedule of Yoga Classes by style in:</h2>
 				<img src="/images/correcting-exersize.jpg" style="float: right; margin: 4px" />
 				<ul>
 					<li>
 						<span class="carrot">&nbsp;</span>
+						<a href="/classes/new-york/">New York</a>
+					</li>
+					<li>
+						<span class="carrot">&nbsp;</span>
+						<a href="/classes/connecticut/">Connecticut (New Haven area)</a>
+					</li>
+					<li>
+						<span class="carrot">&nbsp;</span>
+						<a href="/classes/massachusetts/">Massachusetts (Boston)</a>
+					</li>
+				</ul>
+				<h2>Yoga Studios in:</h2>
+				<ul>
+					<li>
+						<span class="carrot">&nbsp;</span>
 						<a href="/studios/new-york/">New York</a>
+					</li>
+					<li>
+						<span class="carrot">&nbsp;</span>
+						<a href="/studios/connecticut/">Connecticut (New Haven area)</a>
+					</li>
+					<li>
+						<span class="carrot">&nbsp;</span>
+						<a href="/studios/massachusetts/">Massachusetts (Boston)</a>
+					</li>
+				</ul>
+				<h2>Yoga Teachers in:</h2>
+				<ul>
+					<li>
+						<span class="carrot">&nbsp;</span>
+						<a href="/teachers/new-york/">New York</a>
+					</li>
+					<li>
+						<span class="carrot">&nbsp;</span>
+						<a href="/teachers/connecticut/">Connecticut (New Haven area)</a>
+					</li>
+					<li>
+						<span class="carrot">&nbsp;</span>
+						<a href="/teachers/massachusetts/">Massachusetts (Boston)</a>
 					</li>
 				</ul>
 			</div>

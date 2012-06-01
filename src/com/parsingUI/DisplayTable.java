@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.scheduleyoga.dao.Studio;
+import com.scheduleyoga.dao.StudioOld;
 import com.scheduleyoga.parser.Parser;
-import com.scheduleyoga.parser.StudioOld;
 
 /**
  * Servlet implementation class DisplayTable

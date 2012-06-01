@@ -22,12 +22,8 @@
 			<h1>Schedule of Yoga Studios in ${stateName}:</h1>
 		</div>
 			
-		<div class="mainPanel">		
-			<div id="left_panel">
-				#parse("templates/left-panel.html")
-			</div>
-			
-			<div id="right_panel">
+		<div class="mainPanel">					
+			<div>
 				<div style="margin: 10px";></div>
 				<div id="bread">
 					<ul>

@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.scheduleyoga.common.GroupList;
+import com.scheduleyoga.common.LookUp;
 import com.scheduleyoga.dao.DBAccess;
 import com.scheduleyoga.dao.Instructor;
 import com.scheduleyoga.dao.Studio;
@@ -56,10 +57,17 @@ public class ClassesController {
 	protected String prepareClassesListPage(@PathVariable String stateNameUrl, 
 											 ModelMap map) {
 
-		if (!stateNameUrl.equals("new-york")){
-			stateNameUrl="new-york";
+    	Map<String, String> stateURLs = LookUp.getInstance().getStatesMap();    	
+    	if(!stateURLs.containsKey(stateNameUrl.toLowerCase().trim())){
+    		//specified state is invalid. Redirect to new-york
+    		stateNameUrl="new-york";
 			return "redirect:/classes/"+stateNameUrl+"/";
-		}
+    	}
+    	
+    	if (!stateNameUrl.trim().toLowerCase().equals(stateNameUrl)){
+    		//stateNameUrl has capitalized letters.
+    		return "redirect:/classes/"+stateNameUrl.trim().toLowerCase()+"/";
+    	}       	
     	
 		String stateName = WordUtils.capitalize(StringUtils.replace(stateNameUrl, "-", " "));
 		
@@ -83,12 +91,12 @@ public class ClassesController {
 									   @PathVariable String styleName, 
 									   ModelMap map) {
 		
-    	return processClassPage(stateName,styleName,new Date() ,map);
+    	return processClassPage(stateName, styleName, new Date(), map);
     	
 	}
     
-    @RequestMapping(value = "/{stateName}/{styleName}/{dateStr}.html", method = RequestMethod.GET)
-	protected String prepareClassSpecificDatePage(@PathVariable String stateName, 
+    @RequestMapping(value = "/{stateNameUrl}/{styleName}/{dateStr}.html", method = RequestMethod.GET)
+	protected String prepareClassSpecificDatePage(@PathVariable String stateNameUrl, 
 												@PathVariable String styleName,
 												@PathVariable String dateStr,
 												ModelMap map) {
@@ -105,10 +113,10 @@ public class ClassesController {
 		Date today = new Date();		
 		if (today.after(urlDate)){
 			//The date in the URL is in the past. Redirect to home page for the Class (with today's schedule).
-			return "redirect:/classes/"+stateName+"/"+styleName+"/";
+			return "redirect:/classes/"+stateNameUrl.toLowerCase().trim()+"/"+styleName+"/";
 		}
     	
-		return processClassPage(stateName, styleName, urlDate, map);
+		return processClassPage(stateNameUrl, styleName, urlDate, map);
 	}
 
 	/**
@@ -118,29 +126,39 @@ public class ClassesController {
 	 * @param map
 	 * @return
 	 */
-	protected String processClassPage(String stateName, String styleName, Date urlDate, ModelMap map) {
+	protected String processClassPage(String stateNameUrl, String styleName, Date urlDate, ModelMap map) {
 		
-		if (!stateName.equals("new-york")){
-			stateName="new-york";
-			return "redirect:/classes/"+stateName+"/"+styleName+"/";
-		}
 		
+    	Map<String, String> stateURLs = LookUp.getInstance().getStatesMap();    	
+    	if(!stateURLs.containsKey(stateNameUrl.toLowerCase().trim())){
+    		//specified state is invalid. Redirect to new-york
+    		stateNameUrl="new-york";
+			return "redirect:/classes/"+stateNameUrl+"/"+styleName.trim().toLowerCase()+"/";
+    	}
+    	
+    	if (!stateNameUrl.trim().toLowerCase().equals(stateNameUrl)){
+    		//stateNameUrl has capitalized letters.
+    		return "redirect:/classes/"+stateNameUrl.trim().toLowerCase()+"/"+styleName.trim().toLowerCase()+"/";
+    	}     
+    	
+    	if (!styleName.trim().toLowerCase().equals(styleName)){
+    		//styleName has capitalized letters.
+    		return "redirect:/classes/"+stateNameUrl.trim().toLowerCase()+"/"+styleName.trim().toLowerCase()+"/";
+    	}     
     	
 		Style style = Style.createNewFromUrl(styleName);
 		if (null == style){
-			return "redirect:/classes/"+stateName+"/"+Style.NAME_BEGINNER.toLowerCase()+"/";
+			return "redirect:/classes/"+stateNameUrl+"/"+Style.NAME_BEGINNER.toLowerCase()+"/";
 		}
 		
-		buildClassPage(map, style, stateName, urlDate);
+		buildClassPage(map, style, stateNameUrl, urlDate);
 		return "classes/class";
 	}
 	
-
-
     
 	protected void buildClassPage(ModelMap map, Style style, String stateNameUrl, Date schedDate) {
 		
-		List<Event> events = Event.findEventsForStyleForDate(style, schedDate);
+		List<Event> events = Event.findEventsForStyleForDate(style, schedDate,stateNameUrl);
 		
 		Map<Date, List<Event>> schedule = GroupList.group(events, "startTime");
 		

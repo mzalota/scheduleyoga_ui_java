@@ -23,11 +23,7 @@
 		</div>
 			
 		<div class="mainPanel">		
-			<div id="left_panel">
-				#parse("templates/left-panel.html")
-			</div>
-			
-			<div id="right_panel">
+			<div>
 				<div style="margin: 10px";></div>
 				<div id="bread">
 					<ul>
